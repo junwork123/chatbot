@@ -1,33 +1,27 @@
 package chatbot.discord.common.chatbot;
 
-import chatbot.discord.common.command.Command;
+import chatbot.discord.common.command.CommandFactory;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Component;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Slf4j
 @Getter
 public class ChatBotClient {
     private final ChatBotFactory chatBotFactory;
-    private final List<Command> commands;
+    private final CommandFactory commandFactory;
 
     private ChatBotClient(Builder builder) {
         this.chatBotFactory = builder.chatBotFactory;
-        this.commands = builder.commands;
+        this.commandFactory = builder.commandFactory;
     }
     public static class Builder{
         private final ChatBotFactory chatBotFactory;
-        private final List<Command> commands = new ArrayList<>();
-        public Builder(ChatBotFactory chatBotFactory) {
+        private final CommandFactory commandFactory;
+        public Builder(ChatBotFactory chatBotFactory, CommandFactory commandFactory) {
             this.chatBotFactory = chatBotFactory;
+            this.commandFactory = commandFactory;
         }
-        public Builder addCommand(Command command){
-            this.commands.add(command);
-            return this;
-        }
+
         public ChatBotClient build(){
             return new ChatBotClient(this);
         }
