@@ -1,4 +1,4 @@
-package chatbot.discord.common;
+package chatbot.client.common;
 
 public class Const {
     private Const() {}

@@ -1,4 +1,4 @@
-package chatbot.discord.common.command;
+package chatbot.client.common.command;
 
 import lombok.Getter;
 import lombok.Setter;

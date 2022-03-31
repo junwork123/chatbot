@@ -1,4 +1,4 @@
-package chatbot.discord.service;
+package chatbot.client.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

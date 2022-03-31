@@ -1,21 +1,17 @@
-package chatbot.discord.common.command;
+package chatbot.client.common.command;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.List;
 
-import static chatbot.discord.common.Const.JSON_PATH;
-import static org.junit.jupiter.api.Assertions.*;
+import static chatbot.client.common.Const.JSON_PATH;
 
 class CommandFactoryTest {
     CommandFactory commandFactory;
