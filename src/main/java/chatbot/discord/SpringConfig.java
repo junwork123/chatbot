@@ -1,6 +1,7 @@
 package chatbot.discord;
 
 import chatbot.discord.common.chatbot.ChatBotClient;
+import chatbot.discord.common.chatbot.DiscordChatBotAdapter;
 import chatbot.discord.common.chatbot.DiscordChatBotFactory;
 import chatbot.discord.common.command.CommandFactory;
 import org.springframework.beans.factory.annotation.Autowired;
