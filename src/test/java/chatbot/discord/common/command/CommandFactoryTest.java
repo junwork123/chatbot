@@ -27,12 +27,6 @@ class CommandFactoryTest {
             "  \"response\": \"Hello World!\"\n" +
             "}";
 
-            /**
-             * {
-             *   "name": "ping",
-             *   "description": "Ping pong!"
-             * }
-             */
     @BeforeEach
     public void createTestJsonCommand() throws IOException {
         Files.writeString(Paths.get(testPath), testContent, StandardOpenOption.CREATE);
