@@ -1,11 +1,7 @@
 package chatbot.discord.common.chatbot;
 
 import discord4j.core.GatewayDiscordClient;
-import discord4j.core.object.presence.ClientActivity;
-import discord4j.core.object.presence.ClientPresence;
 import lombok.extern.slf4j.Slf4j;
-
-import static chatbot.discord.common.Const.DISCORD_TOKEN_ID;
 
 @Slf4j
 public class DiscordChatBotAdapter implements ChatBotAdapter<GatewayDiscordClient> {
