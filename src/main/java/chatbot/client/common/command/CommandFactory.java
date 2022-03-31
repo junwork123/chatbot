@@ -1,4 +1,4 @@
-package chatbot.discord.common.command;
+package chatbot.client.common.command;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Getter;
@@ -10,8 +10,8 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
-import static chatbot.discord.common.Const.JSON_PATH;
-import static chatbot.discord.common.Const.JSON_PATTERN;
+import static chatbot.client.common.Const.JSON_PATH;
+import static chatbot.client.common.Const.JSON_PATTERN;
 
 @Slf4j
 @Getter

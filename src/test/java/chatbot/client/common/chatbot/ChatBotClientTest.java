@@ -1,6 +1,6 @@
-package chatbot.discord.common.chatbot;
+package chatbot.client.common.chatbot;
 
-import chatbot.discord.common.command.CommandFactory;
+import chatbot.client.common.command.CommandFactory;
 import discord4j.core.GatewayDiscordClient;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;

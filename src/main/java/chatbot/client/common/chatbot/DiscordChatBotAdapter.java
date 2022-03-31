@@ -1,4 +1,4 @@
-package chatbot.discord.common.chatbot;
+package chatbot.client.common.chatbot;
 
 import discord4j.core.GatewayDiscordClient;
 import lombok.extern.slf4j.Slf4j;

@@ -1,14 +1,10 @@
-package chatbot.discord;
+package chatbot.client;
 
-import chatbot.discord.common.chatbot.ChatBotClient;
-import chatbot.discord.common.chatbot.DiscordChatBotAdapter;
-import chatbot.discord.common.chatbot.DiscordChatBotFactory;
-import chatbot.discord.common.command.CommandFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import chatbot.client.common.chatbot.ChatBotClient;
+import chatbot.client.common.chatbot.DiscordChatBotFactory;
+import chatbot.client.common.command.CommandFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import java.io.IOException;
 
 @Configuration
 public class SpringConfig {

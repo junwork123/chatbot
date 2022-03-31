@@ -1,9 +1,8 @@
-package chatbot.discord.controller;
+package chatbot.client.controller;
 
-import chatbot.discord.common.chatbot.ChatBotAdapter;
-import chatbot.discord.common.chatbot.ChatBotClient;
-import chatbot.discord.common.chatbot.DiscordChatBotAdapter;
-import chatbot.discord.common.command.Command;
+import chatbot.client.common.chatbot.ChatBotClient;
+import chatbot.client.common.chatbot.DiscordChatBotAdapter;
+import chatbot.client.common.command.Command;
 import discord4j.core.GatewayDiscordClient;
 import discord4j.core.event.domain.message.MessageCreateEvent;
 import discord4j.core.object.entity.Message;

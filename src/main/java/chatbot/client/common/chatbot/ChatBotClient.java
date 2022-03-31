@@ -1,6 +1,6 @@
-package chatbot.discord.common.chatbot;
+package chatbot.client.common.chatbot;
 
-import chatbot.discord.common.command.CommandFactory;
+import chatbot.client.common.command.CommandFactory;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
