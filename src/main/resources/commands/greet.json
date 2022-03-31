@@ -1,12 +1,5 @@
 {
-  "name": "greet",
-  "description": "Greets you",
-  "options": [
-    {
-      "name": "name",
-      "description": "Your name",
-      "type": 3,
-      "required": true
-    }
-  ]
+  "startCommand": "!로붕쿤",
+  "description": "환영인사 커맨드",
+  "options": []
 }
