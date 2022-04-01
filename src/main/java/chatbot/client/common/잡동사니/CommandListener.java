@@ -1,6 +1,6 @@
-package chatbot.client.common;
-
-public class CommandListener {
+package chatbot.client.common.잡동사니;
+//
+//public class CommandListener {
 //    @Autowired
 //    private final Collection<Command> commands;
 //
@@ -22,5 +22,5 @@ public class CommandListener {
 //                //Have our command class handle all logic related to its specific command.
 //                .flatMap(command -> command.execute(event));
 //    }
-
-}
+//
+//}

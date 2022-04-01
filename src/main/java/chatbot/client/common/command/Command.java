@@ -27,11 +27,7 @@ public class Command {
     public Mono<Void> execute(String command) {
         return null;
     }
-//    @Override
-//    public String getName() {
-//        return "greet";
-//    }
-//
+
 //    @Override
 //    public Mono<Void> execute(ChatInputInteractionEvent event) {
 //        String name = event.getOption("name")

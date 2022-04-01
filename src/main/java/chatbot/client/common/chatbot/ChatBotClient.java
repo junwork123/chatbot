@@ -1,23 +1,27 @@
 package chatbot.client.common.chatbot;
 
-import chatbot.client.common.command.CommandFactory;
+import chatbot.client.common.command.Command;
+import chatbot.client.common.command.CommandBuilder;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 @Slf4j
 @Getter
 public class ChatBotClient {
-    private final ChatBotFactory chatBotFactory;
-    private final CommandFactory commandFactory;
+    private final ChatBot chatBot;
 
     private ChatBotClient(Builder builder) {
-        this.chatBotFactory = builder.chatBotFactory;
-        this.commandFactory = builder.commandFactory;
+        List<Command> commands = builder.commandFactory.getCommands();
+        ChatBot createdChatBot = builder.chatBotFactory.CreateChatBot(commands);
+        this.chatBot = createdChatBot;
     }
     public static class Builder{
         private final ChatBotFactory chatBotFactory;
-        private final CommandFactory commandFactory;
-        public Builder(ChatBotFactory chatBotFactory, CommandFactory commandFactory) {
+        private final CommandBuilder commandFactory;
+        public Builder(ChatBotFactory chatBotFactory, CommandBuilder commandFactory) {
             this.chatBotFactory = chatBotFactory;
             this.commandFactory = commandFactory;
         }
