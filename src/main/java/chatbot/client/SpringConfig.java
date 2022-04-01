@@ -2,7 +2,7 @@ package chatbot.client;
 
 import chatbot.client.common.chatbot.ChatBotClient;
 import chatbot.client.common.chatbot.DiscordChatBotFactory;
-import chatbot.client.common.command.CommandFactory;
+import chatbot.client.common.command.CommandBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -20,8 +20,8 @@ public class SpringConfig {
     }
 
     @Bean
-    public CommandFactory commandFactory() {
-        return new CommandFactory.Builder()
+    public CommandBuilder commandFactory() {
+        return new CommandBuilder.Builder()
                 .addCommand("book")
                 .addCommand("greet")
                 .addCommand("ping")
