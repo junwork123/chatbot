@@ -1,7 +1,12 @@
 package chatbot.client.common.chatbot;
 
+import chatbot.client.common.command.Command;
+
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+
 public interface ChatBot {
-    public boolean hasCommands();
-    public void publish();
-    public String response(String command);
+    public void request(Object message);
+    public void response(String content);
 }

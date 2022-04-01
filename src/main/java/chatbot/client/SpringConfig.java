@@ -22,9 +22,10 @@ public class SpringConfig {
     @Bean
     public CommandBuilder commandFactory() {
         return new CommandBuilder.Builder()
-                .addCommand("book")
-                .addCommand("greet")
                 .addCommand("ping")
+                .addCommand("로붕쿤")
+                .addCommand("예약")
+                .addCommand("입찰")
                 .build();
     }
 }

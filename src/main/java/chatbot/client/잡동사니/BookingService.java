@@ -14,6 +14,18 @@ package chatbot.client.잡동사니;
 ////    @RequestMapping
 ////    public void book(@RequestParam MessageChannel channel) throws MalformedURLException {
 ////
+
+//channel.createMessage(MessageCreateSpec.builder()
+//        .content("Hello @everyone")
+//        .allowedMentions(AllowedMentions.suppressEveryone())
+//        .addEmbed(EmbedCreateSpec.builder()
+//        .title("Foo")
+//        .addField("Bar", "Baz", false)
+//        .color(Color.BLUE)
+//        .build())
+//        .build())
+
+
 ////        String IMAGE_URL = "https://cdn.betterttv.net/emote/55028cd2135896936880fdd7/3x";
 ////        String ANY_URL = "https://www.youtube.com/watch?v=5zwY50-necw";
 ////        EmbedCreateSpec.Builder builder = EmbedCreateSpec.builder();
