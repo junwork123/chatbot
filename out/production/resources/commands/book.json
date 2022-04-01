@@ -1,6 +1,6 @@
 {
   "startCommand": "!예약",
   "description": "날짜예약 커맨드",
-  "response" : "흥! 이제 온거냐구",
+  "response" : "흥! 이제 온거냐구", 
   "options": []
 }

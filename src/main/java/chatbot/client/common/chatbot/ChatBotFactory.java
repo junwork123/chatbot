@@ -1,5 +1,9 @@
 package chatbot.client.common.chatbot;
 
-public interface ChatBotFactory<T> {
-    T CreateChatBot();
+import chatbot.client.common.command.Command;
+
+import java.util.List;
+
+public interface ChatBotFactory {
+    public ChatBot CreateChatBot(List<Command> commands);
 }

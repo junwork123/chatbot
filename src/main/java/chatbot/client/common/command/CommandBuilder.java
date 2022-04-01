@@ -15,10 +15,9 @@ import static chatbot.client.common.Const.JSON_PATTERN;
 
 @Slf4j
 @Getter
-public class CommandFactory {
+public class CommandBuilder {
     private final List<Command> commands;
-
-    private CommandFactory(Builder builder){
+    private CommandBuilder(Builder builder){
         this.commands = builder.commands;
     }
 
@@ -32,8 +31,8 @@ public class CommandFactory {
             path = JSON_PATH;
             pattern = JSON_PATTERN;
         }
-        public CommandFactory build(){
-            return new CommandFactory(this);
+        public CommandBuilder build(){
+            return new CommandBuilder(this);
         }
 
         public Builder addCommand(String jsonFileName) {
@@ -47,7 +46,6 @@ public class CommandFactory {
             }catch (IOException e){
                 e.toString();
             }
-
             return this;
         }
 
