@@ -1,4 +1,4 @@
-package chatbot.client.common.잡동사니;
+package chatbot.client.잡동사니;
 
 import chatbot.client.common.chatbot.ChatBot;
 import chatbot.client.common.chatbot.ChatBotFactory;
