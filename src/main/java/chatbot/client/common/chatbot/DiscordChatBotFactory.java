@@ -8,6 +8,7 @@ import discord4j.core.event.domain.lifecycle.*;
 import discord4j.core.event.domain.message.MessageCreateEvent;
 import discord4j.core.object.entity.Message;
 import discord4j.core.object.entity.User;
+import discord4j.core.object.entity.channel.MessageChannel;
 import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -46,8 +47,21 @@ public class DiscordChatBotFactory implements ChatBotFactory {
             client.getEventDispatcher().on(MessageCreateEvent.class)
                     .map(MessageCreateEvent::getMessage)
                     .filter(message -> message.getAuthor().map(user -> !user.isBot()).orElse(false))
-                    .filter(message -> message.getContent().startsWith(command.startCommand))
-                    .subscribe(message -> chatBot.request(message));
+                    .filter(message -> message.getContent().startsWith(command.vo.getStartCommand()))
+                    .map(message -> {
+                        String response = command.execute(message.getContent());
+                        message.getChannel().flatMap(channel -> channel.createMessage(response))
+                                .subscribe();
+                        return response;
+                    })
+                    .subscribe();
+                    //.subscribe(message -> chatBot.request(message));
+
+//            메시지 보내는 방법(지우지 말 것)
+//            client.getChannelById(channelId)
+//                    .ofType(MessageChannel.class)
+//                    .flatMap(channel -> channel.createMessage(message))
+//                    .subscribe();
         }
     }
 

@@ -1,16 +1,29 @@
 package chatbot.client.common.command;
 
+import chatbot.client.service.ChatBotService;
 import lombok.Getter;
-import lombok.Setter;
-import reactor.core.publisher.Mono;
+import lombok.RequiredArgsConstructor;
 
-import java.util.ArrayList;
-import java.util.List;
+@Getter
+@RequiredArgsConstructor
+public class Command{
+    public final ChatBotService service;
+    public final CommandVO vo;
+    public String execute(String message){
+        String content = parseMessageWithCommand(message, vo.getStartCommand());
+        String optionParam = null;
+        for (String option : vo.getOptions()) {
+            if(content.startsWith(option)){
+                optionParam = option;
+                content = parseMessageWithCommand(message, option);
+            }
+        }
+        return service.doService(optionParam, content);
+    }
 
-@Getter @Setter
-public class Command {
-    public String startCommand;
-    public String description;
-    public String response;
-    public List<String> options = new ArrayList<>();
+    private String parseMessageWithCommand(String message, String command){
+        String commandWithSpace = new StringBuilder(command).append(" ").toString();
+        String result = message.replaceFirst(commandWithSpace, "");
+        return result;
+    }
 }

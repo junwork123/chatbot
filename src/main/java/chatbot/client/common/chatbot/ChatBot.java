@@ -7,6 +7,6 @@ import java.util.List;
 import java.util.Map;
 
 public interface ChatBot {
-    public void request(Object message);
-    public void response(String content);
+//    public void request(Object message);
+//    public void response(String content);
 }
