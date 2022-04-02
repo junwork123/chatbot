@@ -1,5 +1,7 @@
 package chatbot.client.common.command;
 
+import chatbot.client.common.chatbot.ChatBot;
+import chatbot.client.service.ChatBotService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
@@ -35,13 +37,13 @@ public class CommandBuilder {
             return new CommandBuilder(this);
         }
 
-        public Builder addCommand(String jsonFileName) {
+        public Builder addCommand(String jsonFileName, ChatBotService service) {
             String jsonString = readJsonFile(jsonFileName);
             ObjectMapper objectMapper = new ObjectMapper();
             try {
-                Command value = objectMapper.readValue(jsonString, Command.class);
-                commands.add(value);
-                log.info("{} : {} {}", this.getClass(), value.startCommand, value.getDescription());
+                CommandVO commandVO = objectMapper.readValue(jsonString, CommandVO.class);
+                commands.add(new Command(service, commandVO));
+                log.info("{} : {} {}", this.getClass(), commandVO.startCommand, commandVO.description);
 
             }catch (IOException e){
                 e.toString();

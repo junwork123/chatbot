@@ -1,4 +1,4 @@
-package chatbot.client.common.잡동사니;
+package chatbot.client.잡동사니;
 //
 //public class CommandListener {
 //    @Autowired

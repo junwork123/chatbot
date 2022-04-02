@@ -1,43 +1,29 @@
 package chatbot.client.common.command;
 
+import chatbot.client.service.ChatBotService;
 import lombok.Getter;
-import lombok.Setter;
-import reactor.core.publisher.Mono;
+import lombok.RequiredArgsConstructor;
 
-import java.util.List;
-
-@Getter @Setter
-public class Command {
-    /**
-     * {
-     *   "startCommand": "!예약",
-     *   "description": "날짜예약 커맨드",
-     *   "options": []
-     * }
-     */
-    public String startCommand;
-    public String description;
-    public String response;
-    public List<String> options;
-
-    public boolean isExecutable(String command) {
-        return false;
+@Getter
+@RequiredArgsConstructor
+public class Command{
+    public final ChatBotService service;
+    public final CommandVO vo;
+    public String execute(String message){
+        String content = parseMessageWithCommand(message, vo.getStartCommand());
+        String optionParam = null;
+        for (String option : vo.getOptions()) {
+            if(content.startsWith(option)){
+                optionParam = option;
+                content = parseMessageWithCommand(message, option);
+            }
+        }
+        return service.doService(optionParam, content);
     }
 
-    public Mono<Void> execute(String command) {
-        return null;
+    private String parseMessageWithCommand(String message, String command){
+        String commandWithSpace = new StringBuilder(command).append(" ").toString();
+        String result = message.replaceFirst(commandWithSpace, "");
+        return result;
     }
-
-//    @Override
-//    public Mono<Void> execute(ChatInputInteractionEvent event) {
-//        String name = event.getOption("name")
-//                .flatMap(ApplicationCommandInteractionOption::getValue)
-//                .map(ApplicationCommandInteractionOptionValue::asString)
-//                .get(); //This is warning us that we didn't check if its present, we can ignore this on required options
-//
-//        //Reply to the slash command, with the name the user supplied
-//        return  event.reply()
-//                .withEphemeral(true)
-//                .withContent("Hello, " + name);
-//    }
 }
