@@ -1,5 +1,6 @@
 package chatbot.client.common.command;
 
+import chatbot.client.service.LostArkAuctionService;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -35,13 +36,13 @@ class CommandTest {
     @Test
     public void JSON_읽어오기() throws IOException{
         //given
-        commandBuilder = new CommandBuilder.Builder().addCommand("ping").build();
+        commandBuilder = new CommandBuilder.Builder().addCommand("입찰", new LostArkAuctionService()).build();
 
         //when
         List<Command> commands = commandBuilder.getCommands();
 
         //then
         Assertions.assertThat(commands.size()).isEqualTo(1);
-        Assertions.assertThat(commands.get(0).getStartCommand()).isEqualTo("!ping");
+        Assertions.assertThat(commands.get(0).vo.getStartCommand()).isEqualTo("!입찰");
     }
 }
