@@ -5,12 +5,20 @@ import chatbot.client.common.chatbot.ChatBotFactory;
 import chatbot.client.common.command.Command;
 import chatbot.client.common.command.CommandBuilder;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 
 @Slf4j
+@RequestMapping("/")
 public class ChatBotController {
     private final ChatBot chatBot;
+
+    public ChatBotController(ChatBotFactory chatBotFactory, CommandBuilder commandFactory) {
+        List<Command> commands = commandFactory.getCommands();
+        ChatBot createdChatBot = chatBotFactory.CreateChatBot(commands);
+        this.chatBot = createdChatBot;
+    }
 
     private ChatBotController(Builder builder) {
         List<Command> commands = builder.commandFactory.getCommands();
@@ -30,8 +38,9 @@ public class ChatBotController {
         }
     }
 
-//    @GetMapping("/입찰/{price}")
-//    public String hello(@RequestParam int price){
-//        //71%(4인)/83%(8인)/89%(16인)
+//    @GetMapping
+//    public String hello() {
+//        return "index";
+//    }
 
 }

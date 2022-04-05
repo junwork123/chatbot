@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="chatbot.client.common.command.CommandTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2022-04-05T12:54:32" hostname="MALICIOUS" time="0.283">
+  <properties/>
+  <testcase name="JSON_읽어오기()" classname="chatbot.client.common.command.CommandTest" time="0.283"/>
+  <system-out><![CDATA[21:54:32.807 [Test worker] INFO chatbot.client.common.command.CommandBuilder - commandFilePath = src/main/resources/commands/입찰.json
+21:54:32.987 [Test worker] INFO chatbot.client.common.command.CommandBuilder - class chatbot.client.common.command.CommandBuilder$Builder : !입찰 경매 입찰시 손익분기점 계산(4인/8인)
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
