@@ -1,0 +1,6 @@
+{
+  "startCommand": "!ping",
+  "description": "기본 커맨드",
+  "response" : "pong!",
+  "options": []
+}

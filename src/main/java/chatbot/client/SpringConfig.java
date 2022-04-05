@@ -25,7 +25,7 @@ public class SpringConfig {
 //                .addCommand("ping")
 //                .addCommand("로붕쿤")
 //                .addCommand("예약")
-                .addCommand("입찰",new LostArkAuctionService())
+                .addCommand("auction",new LostArkAuctionService())
                 .build();
     }
 }
