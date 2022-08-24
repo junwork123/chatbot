@@ -1,4 +1,4 @@
-package chatbot.client.잡동사니;
+package chatbot.client.chore;
 //
 //public class CommandListener {
 //    @Autowired
