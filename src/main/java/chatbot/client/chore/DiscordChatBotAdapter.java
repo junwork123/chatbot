@@ -1,9 +1,4 @@
-package chatbot.client.잡동사니;
-
-import chatbot.client.common.chatbot.ChatBot;
-import chatbot.client.common.chatbot.ChatBotFactory;
-import discord4j.core.GatewayDiscordClient;
-import lombok.extern.slf4j.Slf4j;
+package chatbot.client.chore;
 
 //@Slf4j
 //public class DiscordChatBotAdapter implements ChatBotAdapter<GatewayDiscordClient> {

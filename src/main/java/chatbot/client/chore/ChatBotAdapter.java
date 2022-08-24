@@ -1,6 +1,4 @@
-package chatbot.client.잡동사니;
-
-import chatbot.client.common.chatbot.ChatBotFactory;
+package chatbot.client.chore;
 
 //public interface ChatBotAdapter<T> {
 //    boolean supports(ChatBotFactory factory)throws IllegalAccessException;
