@@ -3,8 +3,8 @@ package chatbot.client.service;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-@Service
 @Slf4j
+@Service
 public class LostArkAuctionService implements ChatBotService {
     @Override
     public String doService(String option, String content) {

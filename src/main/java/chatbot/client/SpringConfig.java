@@ -7,6 +7,7 @@ import chatbot.client.common.command.Command;
 import chatbot.client.common.command.CommandBuilder;
 import chatbot.client.controller.ChatBotController;
 import chatbot.client.service.LostArkAuctionService;
+import chatbot.client.service.PingPongService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -32,9 +33,7 @@ public class SpringConfig {
     @Bean
     public CommandBuilder commandFactory() {
         return new CommandBuilder.Builder()
-//                .addCommand("ping")
-//                .addCommand("로붕쿤")
-//                .addCommand("예약")
+                .addCommand("ping", new PingPongService())
                 .addCommand("auction",new LostArkAuctionService())
                 .build();
     }
