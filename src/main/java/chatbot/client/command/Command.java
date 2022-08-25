@@ -1,4 +1,4 @@
-package chatbot.client.common.command;
+package chatbot.client.command;
 
 import chatbot.client.service.ChatBotService;
 import lombok.Getter;

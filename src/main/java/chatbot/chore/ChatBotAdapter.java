@@ -1,4 +1,4 @@
-package chatbot.client.chore;
+package chatbot.chore;
 
 //public interface ChatBotAdapter<T> {
 //    boolean supports(ChatBotFactory factory)throws IllegalAccessException;

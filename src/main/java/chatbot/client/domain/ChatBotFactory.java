@@ -1,6 +1,6 @@
-package chatbot.client.common.chatbot;
+package chatbot.client.domain;
 
-import chatbot.client.common.command.Command;
+import chatbot.client.command.Command;
 
 import java.util.List;
 

@@ -1,6 +1,5 @@
-package chatbot.client.common.command;
+package chatbot.client.command;
 
-import chatbot.client.common.chatbot.ChatBot;
 import chatbot.client.service.ChatBotService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Getter;

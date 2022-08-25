@@ -1,5 +1,7 @@
 package chatbot.client.common.command;
 
+import chatbot.client.command.Command;
+import chatbot.client.command.CommandBuilder;
 import chatbot.client.service.LostArkAuctionService;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
@@ -7,9 +9,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
 import java.util.List;
 
 import static chatbot.client.common.Const.JSON_PATH;

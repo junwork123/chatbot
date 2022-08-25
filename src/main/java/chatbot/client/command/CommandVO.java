@@ -1,4 +1,4 @@
-package chatbot.client.common.command;
+package chatbot.client.command;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

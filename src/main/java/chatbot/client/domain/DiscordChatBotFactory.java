@@ -1,17 +1,12 @@
-package chatbot.client.common.chatbot;
+package chatbot.client.domain;
 
-import chatbot.client.common.command.Command;
-import discord4j.core.DiscordClient;
+import chatbot.client.command.Command;
 import discord4j.core.DiscordClientBuilder;
 import discord4j.core.GatewayDiscordClient;
 import discord4j.core.event.domain.lifecycle.*;
 import discord4j.core.event.domain.message.MessageCreateEvent;
-import discord4j.core.object.entity.Message;
 import discord4j.core.object.entity.User;
-import discord4j.core.object.entity.channel.MessageChannel;
 import lombok.extern.slf4j.Slf4j;
-import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
 
 import java.util.List;
 

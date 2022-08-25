@@ -1,4 +1,4 @@
-package chatbot.client.chore;
+package chatbot.chore;
 
 //@Slf4j
 //public class DiscordChatBotAdapter implements ChatBotAdapter<GatewayDiscordClient> {

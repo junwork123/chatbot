@@ -1,4 +1,4 @@
-package chatbot.client.chore;
+package chatbot.chore;
 //
 //public class CommandListener {
 //    @Autowired
