@@ -1,11 +1,10 @@
 package chatbot.client;
 
-import chatbot.client.common.chatbot.ChatBot;
-import chatbot.client.common.chatbot.ChatBotFactory;
-import chatbot.client.common.chatbot.DiscordChatBotFactory;
-import chatbot.client.common.command.Command;
-import chatbot.client.common.command.CommandBuilder;
-import chatbot.client.controller.ChatBotController;
+import chatbot.client.command.Command;
+import chatbot.client.command.CommandBuilder;
+import chatbot.client.domain.ChatBot;
+import chatbot.client.domain.ChatBotFactory;
+import chatbot.client.domain.DiscordChatBotFactory;
 import chatbot.client.service.LostArkAuctionService;
 import chatbot.client.service.PingPongService;
 import org.springframework.context.annotation.Bean;

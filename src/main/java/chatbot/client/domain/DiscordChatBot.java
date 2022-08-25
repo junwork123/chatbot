@@ -1,10 +1,6 @@
-package chatbot.client.common.chatbot;
+package chatbot.client.domain;
 
-import chatbot.client.service.ChatBotService;
-import discord4j.common.util.Snowflake;
 import discord4j.core.GatewayDiscordClient;
-import discord4j.core.object.entity.Message;
-import discord4j.core.object.entity.channel.MessageChannel;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
