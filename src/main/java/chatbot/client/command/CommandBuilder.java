@@ -1,7 +1,6 @@
 package chatbot.client.command;
 
 import chatbot.client.controller.ChatBotController;
-import chatbot.client.service.ChatBotService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
@@ -12,8 +11,8 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
-import static chatbot.client.common.Const.JSON_PATH;
-import static chatbot.client.common.Const.JSON_PATTERN;
+import static chatbot.client.utils.ConstUtils.JSON_PATH;
+import static chatbot.client.utils.ConstUtils.JSON_PATTERN;
 
 @Slf4j
 @Getter
