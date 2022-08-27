@@ -11,6 +11,6 @@ public class LostArkAuctionController implements ChatBotController{
     private final LostArkAuctionService service = new LostArkAuctionService();
     @Override
     public String response(String option, @NonNull String content) {
-        return null;
+        return service.makeResponse(option, content);
     }
 }
