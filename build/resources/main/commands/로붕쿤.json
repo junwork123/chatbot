@@ -1,6 +1,0 @@
-{
-  "startCommand": "!로붕쿤",
-  "description": "환영인사 커맨드",
-  "response" : "흥! 이제 온거냐구",
-  "options": []
-}

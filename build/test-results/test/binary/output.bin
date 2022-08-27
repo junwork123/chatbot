@@ -1,2 +1,0 @@
-�21:54:32.807 [Test worker] INFO chatbot.client.common.command.CommandBuilder - commandFilePath = src/main/resources/commands/입찰.json
-�21:54:32.987 [Test worker] INFO chatbot.client.common.command.CommandBuilder - class chatbot.client.common.command.CommandBuilder$Builder : !입찰 경매 입찰시 손익분기점 계산(4인/8인)
