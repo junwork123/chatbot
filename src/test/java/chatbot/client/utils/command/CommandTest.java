@@ -1,4 +1,4 @@
-package chatbot.client.common.command;
+package chatbot.client.utils.command;
 
 import chatbot.client.command.Command;
 import chatbot.client.command.CommandBuilder;

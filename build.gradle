@@ -21,6 +21,7 @@ repositories {
 dependencies {
 	// API 확장을 위한 의존성 추가 시작
 	implementation 'org.apache.commons:commons-lang3'
+	implementation 'com.google.guava:guava:31.1-jre'
 	// API 확장을 위한 의존성 추가 끝
 
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'

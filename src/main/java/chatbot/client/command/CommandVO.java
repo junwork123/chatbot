@@ -1,16 +1,13 @@
 package chatbot.client.command;
 
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
-import java.util.ArrayList;
-import java.util.List;
-
-@Getter
+@Getter @Setter
 public class CommandVO {
-    public String startCommand;
-    public String description;
-    public String response;
-    public List<String> options = new ArrayList<>();
+    private String startCommand;
+    private String description;
+    private String response;
+    private String platformName;
+    private String templateName;
 }

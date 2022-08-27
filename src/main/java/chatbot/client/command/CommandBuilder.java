@@ -42,7 +42,7 @@ public class CommandBuilder {
             try {
                 CommandVO commandVO = objectMapper.readValue(jsonString, CommandVO.class);
                 commands.add(new Command(controller, commandVO));
-                log.info("{} : {} {}", this.getClass(), commandVO.startCommand, commandVO.description);
+                log.info("{} : {} {}", this.getClass(), commandVO.getStartCommand(), commandVO.getDescription());
 
             }catch (IOException e){
                 e.toString();

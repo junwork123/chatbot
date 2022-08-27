@@ -1,9 +1,13 @@
 package chatbot.client.command;
 
 import chatbot.client.controller.ChatBotController;
+import chatbot.client.domain.DiscordMessageTemplate;
+import chatbot.client.domain.MessageTemplateFactory;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Getter
 @RequiredArgsConstructor
 public class Command{
@@ -11,14 +15,9 @@ public class Command{
     public final CommandVO vo;
     public String execute(String message){
         String content = parseMessageWithCommand(message, vo.getStartCommand());
-        String optionParam = null;
-        for (String option : vo.getOptions()) {
-            if(content.startsWith(option)){
-                optionParam = option;
-                content = parseMessageWithCommand(message, option);
-            }
-        }
-        return controller.response(optionParam, content);
+        log.info("템플릿 등록 {} : {}", vo.getPlatformName(), vo.getTemplateName());
+        MessageTemplateFactory.findTemplate(vo.getPlatformName(), vo.getTemplateName());
+        return controller.response(DiscordMessageTemplate.TEXT, content).getResponse().getMessage();
     }
 
     private String parseMessageWithCommand(String message, String command){

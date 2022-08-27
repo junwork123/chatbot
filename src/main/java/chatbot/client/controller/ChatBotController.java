@@ -1,13 +1,13 @@
 package chatbot.client.controller;
 
-import chatbot.client.domain.ChatBot;
+import chatbot.client.domain.MessageDto;
+import chatbot.client.domain.MessageTemplate;
 import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.lang.Nullable;
-import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.stereotype.Controller;
+
+import static chatbot.client.utils.ApiUtils.ApiResult;
+
 @Controller
 public interface ChatBotController {
-    public String response(@Nullable String option, @NonNull String content);
+    public ApiResult<MessageDto> response(@NonNull MessageTemplate template, @NonNull String content);
 }
