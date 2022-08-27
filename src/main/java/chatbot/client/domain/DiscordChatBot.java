@@ -11,6 +11,6 @@ public class DiscordChatBot implements ChatBot {
     public DiscordChatBot(GatewayDiscordClient client) {
         this.client = client;
     }
-}
 
+}
 
