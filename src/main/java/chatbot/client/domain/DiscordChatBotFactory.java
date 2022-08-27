@@ -10,7 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 
-import static chatbot.client.common.Const.DISCORD_TOKEN_ID;
+import static chatbot.client.utils.ConstUtils.DISCORD_TOKEN_ID;
 
 /**
  * 로아봇 상태에 따른 이벤트 종류
