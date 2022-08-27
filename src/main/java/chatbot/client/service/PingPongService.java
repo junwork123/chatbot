@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class PingPongService implements ChatBotService {
     @Override
-    public String doService(String option, String content) {
+    public String makeResponse(String option, String content) {
         log.info("option = {}, content = {}", option, content);
         return "Pong!";
     }

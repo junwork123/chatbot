@@ -1,5 +1,6 @@
 package chatbot.client.command;
 
+import chatbot.client.controller.ChatBotController;
 import chatbot.client.service.ChatBotService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Getter;
@@ -36,12 +37,12 @@ public class CommandBuilder {
             return new CommandBuilder(this);
         }
 
-        public Builder addCommand(String jsonFileName, ChatBotService service) {
+        public Builder addCommand(String jsonFileName, ChatBotController controller) {
             String jsonString = readJsonFile(jsonFileName);
             ObjectMapper objectMapper = new ObjectMapper();
             try {
                 CommandVO commandVO = objectMapper.readValue(jsonString, CommandVO.class);
-                commands.add(new Command(service, commandVO));
+                commands.add(new Command(controller, commandVO));
                 log.info("{} : {} {}", this.getClass(), commandVO.startCommand, commandVO.description);
 
             }catch (IOException e){

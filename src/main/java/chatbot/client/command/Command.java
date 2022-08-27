@@ -1,13 +1,13 @@
 package chatbot.client.command;
 
-import chatbot.client.service.ChatBotService;
+import chatbot.client.controller.ChatBotController;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
 public class Command{
-    public final ChatBotService service;
+    public final ChatBotController controller;
     public final CommandVO vo;
     public String execute(String message){
         String content = parseMessageWithCommand(message, vo.getStartCommand());
@@ -18,7 +18,7 @@ public class Command{
                 content = parseMessageWithCommand(message, option);
             }
         }
-        return service.doService(optionParam, content);
+        return controller.response(optionParam, content);
     }
 
     private String parseMessageWithCommand(String message, String command){
