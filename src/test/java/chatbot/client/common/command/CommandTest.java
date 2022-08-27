@@ -2,6 +2,7 @@ package chatbot.client.common.command;
 
 import chatbot.client.command.Command;
 import chatbot.client.command.CommandBuilder;
+import chatbot.client.controller.LostArkAuctionController;
 import chatbot.client.service.LostArkAuctionService;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
@@ -35,7 +36,7 @@ class CommandTest {
     @Test
     public void JSON_읽어오기() throws IOException{
         //given
-        commandBuilder = new CommandBuilder.Builder().addCommand("입찰", new LostArkAuctionService()).build();
+        commandBuilder = new CommandBuilder.Builder().addCommand("입찰", new LostArkAuctionController()).build();
 
         //when
         List<Command> commands = commandBuilder.getCommands();
