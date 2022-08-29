@@ -5,18 +5,15 @@ import chatbot.client.command.CommandBuilder;
 import chatbot.client.controller.LostArkAuctionController;
 import chatbot.client.controller.PingPongController;
 import chatbot.client.domain.*;
-import chatbot.client.service.LostArkAuctionService;
-import chatbot.client.service.PingPongService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Configuration
 public class SpringConfig {
     @Bean
-    public void createMessageTemplateFactory(){
+    public void messageTemplateFactory(){
         MessageTemplateFactory.init();
     }
 
