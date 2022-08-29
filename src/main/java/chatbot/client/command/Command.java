@@ -15,7 +15,7 @@ public class Command{
     public final CommandVO vo;
     public String execute(String message){
         String content = parseMessageWithCommand(message, vo.getStartCommand());
-        log.info("템플릿 등록 {} : {}", vo.getPlatformName(), vo.getTemplateName());
+        log.info("템플릿 양식 {} : {}", vo.getPlatformName(), vo.getTemplateName());
         MessageTemplateFactory.findTemplate(vo.getPlatformName(), vo.getTemplateName());
         return controller.response(DiscordMessageTemplate.TEXT, content).getResponse().getMessage();
     }
