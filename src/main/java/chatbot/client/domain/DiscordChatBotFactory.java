@@ -7,10 +7,10 @@ import discord4j.core.event.domain.lifecycle.*;
 import discord4j.core.event.domain.message.MessageCreateEvent;
 import discord4j.core.object.entity.User;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
-
-import static chatbot.client.utils.ConstUtils.DISCORD_TOKEN_ID;
 
 /**
  * 로아봇 상태에 따른 이벤트 종류
@@ -24,6 +24,9 @@ import static chatbot.client.utils.ConstUtils.DISCORD_TOKEN_ID;
  */
 @Slf4j
 public class DiscordChatBotFactory implements ChatBotFactory {
+    @Value("${DISCORD_TOKEN_ID}")
+    private String DISCORD_TOKEN_ID;
+
     @Override
     public ChatBot CreateChatBot(List<Command> commands) {
         GatewayDiscordClient client = DiscordClientBuilder.create(DISCORD_TOKEN_ID).build().login().block();
@@ -50,7 +53,6 @@ public class DiscordChatBotFactory implements ChatBotFactory {
                         return response;
                     })
                     .subscribe();
-                    //.subscribe(message -> chatBot.request(message));
 
 //            메시지 보내는 방법(지우지 말 것)
 //            client.getChannelById(channelId)

@@ -26,6 +26,11 @@ buildSrc/build
 /integration-tests/build
 /src/asciidoc/build
 target/
+
+# API KEY 파일
+resources/application-API-KEY.properties
+
+# 로그 파일 설정
 /logs
 *.log
 
