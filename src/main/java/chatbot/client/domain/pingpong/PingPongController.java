@@ -1,9 +1,8 @@
-package chatbot.client.controller;
+package chatbot.client.domain.pingpong;
 
-import chatbot.client.domain.MessageDto;
-import chatbot.client.domain.MessageTemplate;
-import chatbot.client.service.PingPongService;
-import chatbot.client.utils.ApiUtils;
+import chatbot.client.core.ChatBotController;
+import chatbot.client.message.MessageDto;
+import chatbot.client.message.MessageTemplate;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +11,7 @@ import static chatbot.client.utils.ApiUtils.*;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 @Slf4j
-public class PingPongController implements ChatBotController{
+public class PingPongController implements ChatBotController {
     @Autowired
     private final PingPongService service = new PingPongService();
 

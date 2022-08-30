@@ -1,4 +1,4 @@
-package chatbot.client.domain;
+package chatbot.client.message;
 
 import lombok.Getter;
 import lombok.Setter;

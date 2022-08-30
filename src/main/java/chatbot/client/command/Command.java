@@ -1,8 +1,8 @@
 package chatbot.client.command;
 
-import chatbot.client.controller.ChatBotController;
-import chatbot.client.domain.DiscordMessageTemplate;
-import chatbot.client.domain.MessageTemplateFactory;
+import chatbot.client.core.ChatBotController;
+import chatbot.client.platform.discord.DiscordMessageTemplate;
+import chatbot.client.message.MessageTemplateFactory;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

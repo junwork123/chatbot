@@ -1,8 +1,7 @@
-package chatbot.client.service;
+package chatbot.client.core;
 
-import chatbot.client.domain.MessageTemplate;
+import chatbot.client.message.MessageTemplate;
 import lombok.NonNull;
-import org.springframework.lang.Nullable;
 
 import java.util.Optional;
 

@@ -1,7 +1,7 @@
-package chatbot.client.domain;
+package chatbot.client.message;
 
+import chatbot.client.platform.discord.DiscordMessageTemplate;
 import lombok.Getter;
-import org.springframework.context.annotation.Bean;
 
 import java.util.ArrayList;
 import java.util.List;
