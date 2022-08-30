@@ -1,7 +1,7 @@
-package chatbot.client.service;
+package chatbot.client.domain.pingpong;
 
-import chatbot.client.domain.DiscordMessageTemplate;
-import chatbot.client.domain.MessageTemplate;
+import chatbot.client.core.ChatBotService;
+import chatbot.client.message.MessageTemplate;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 

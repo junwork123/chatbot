@@ -1,4 +1,4 @@
-package chatbot.client.domain;
+package chatbot.client.core;
 
 import chatbot.client.command.Command;
 

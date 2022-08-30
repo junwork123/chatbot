@@ -1,6 +1,6 @@
 package chatbot.client.command;
 
-import chatbot.client.controller.ChatBotController;
+import chatbot.client.core.ChatBotController;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;

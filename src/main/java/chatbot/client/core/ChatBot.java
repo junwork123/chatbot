@@ -1,4 +1,4 @@
-package chatbot.client.domain;
+package chatbot.client.core;
 
 public interface ChatBot {
 //    public void request(Object message);

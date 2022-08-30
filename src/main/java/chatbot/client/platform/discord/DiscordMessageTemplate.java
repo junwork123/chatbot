@@ -1,10 +1,11 @@
-package chatbot.client.domain;
+package chatbot.client.platform.discord;
 
+import chatbot.client.message.MessageTemplate;
 import lombok.Getter;
 import java.util.List;
 
 @Getter
-public enum DiscordMessageTemplate implements MessageTemplate{
+public enum DiscordMessageTemplate implements MessageTemplate {
     /*
      @Naming Rule : 플랫폼명_템플릿명("플랫폼명 템플릿명", "템플릿 내용");
      */

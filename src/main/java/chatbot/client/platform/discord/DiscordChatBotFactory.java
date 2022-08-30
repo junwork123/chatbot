@@ -1,6 +1,8 @@
-package chatbot.client.domain;
+package chatbot.client.platform.discord;
 
 import chatbot.client.command.Command;
+import chatbot.client.core.ChatBot;
+import chatbot.client.core.ChatBotFactory;
 import discord4j.core.DiscordClientBuilder;
 import discord4j.core.GatewayDiscordClient;
 import discord4j.core.event.domain.lifecycle.*;
@@ -8,7 +10,6 @@ import discord4j.core.event.domain.message.MessageCreateEvent;
 import discord4j.core.object.entity.User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
 
 import java.util.List;
 
