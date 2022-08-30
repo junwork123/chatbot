@@ -16,11 +16,13 @@ import discord4j.core.event.domain.message.MessageCreateEvent;
 import discord4j.core.object.VoiceState;
 import discord4j.core.object.entity.Member;
 import discord4j.core.object.entity.User;
+import discord4j.core.object.entity.channel.Channel;
 import discord4j.voice.AudioProvider;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 로아봇 상태에 따른 이벤트 종류
@@ -59,6 +61,12 @@ public class DiscordChatBotFactory implements ChatBotFactory {
                 .map(MessageCreateEvent::getMessage)
                 .filter(message -> message.getAuthor().map(user -> !user.isBot()).orElse(false))
                 .filter(message -> message.getContent().startsWith("!join"))
+                .map(message -> {
+                    message.getChannel().
+                            flatMap(channel -> channel.createMessage("i joined a channel"))
+                            .subscribe();
+                    return message;
+                })
                 .flatMap(message -> message.getAuthorAsMember())
                 .flatMap(member -> member.getVoiceState())
                 .flatMap(VoiceState::getChannel)
@@ -71,12 +79,15 @@ public class DiscordChatBotFactory implements ChatBotFactory {
                 .map(MessageCreateEvent::getMessage)
                 .filter(message -> message.getAuthor().map(user -> !user.isBot()).orElse(false))
                 .filter(message -> message.getContent().startsWith("!out"))
-                .flatMap(message -> message.getAuthorAsMember())
+                .flatMap(message -> {
+                    message.getChannel().
+                            flatMap(channel -> channel.createMessage("i'm out"))
+                            .subscribe();
+                    return message.getAuthorAsMember();
+                })
                 .flatMap(member -> member.getVoiceState())
                 .flatMap(VoiceState::getChannel)
-                // join returns a VoiceConnection which would be required if we were
-                // adding disconnection features, but for now we are just ignoring it.
-                .flatMap(channel -> channel.getVoiceConnection())
+                .flatMap(voiceChannel -> voiceChannel.getVoiceConnection())
                 .flatMap(connection -> connection.disconnect())
                 .subscribe();
     }
