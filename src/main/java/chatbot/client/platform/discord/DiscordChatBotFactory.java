@@ -3,11 +3,20 @@ package chatbot.client.platform.discord;
 import chatbot.client.command.Command;
 import chatbot.client.core.ChatBot;
 import chatbot.client.core.ChatBotFactory;
+import chatbot.client.platform.discord.audioProvider.LavaPlayerAudioProvider;
+import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
+import com.sedmelluq.discord.lavaplayer.player.AudioPlayerManager;
+import com.sedmelluq.discord.lavaplayer.player.DefaultAudioPlayerManager;
+import com.sedmelluq.discord.lavaplayer.source.AudioSourceManagers;
+import com.sedmelluq.discord.lavaplayer.track.playback.NonAllocatingAudioFrameBuffer;
 import discord4j.core.DiscordClientBuilder;
 import discord4j.core.GatewayDiscordClient;
 import discord4j.core.event.domain.lifecycle.*;
 import discord4j.core.event.domain.message.MessageCreateEvent;
+import discord4j.core.object.VoiceState;
+import discord4j.core.object.entity.Member;
 import discord4j.core.object.entity.User;
+import discord4j.voice.AudioProvider;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 
@@ -31,16 +40,48 @@ public class DiscordChatBotFactory implements ChatBotFactory {
     @Override
     public ChatBot CreateChatBot(List<Command> commands) {
         GatewayDiscordClient client = DiscordClientBuilder.create(DISCORD_TOKEN_ID).build().login().block();
-        DiscordChatBot chatBot = new DiscordChatBot(client);
+        AudioProvider provider = LavaPlayerAudioProvider.createAudioProvider();
+
+        DiscordChatBot chatBot = new DiscordChatBot(client, provider);
 
         onCreated(chatBot);
-        RegisterCommands(chatBot, commands);
+        registerActions(chatBot);
+        registerCommands(chatBot, commands);
         onDestroy(chatBot);
 
         return chatBot;
     }
 
-    private void RegisterCommands(DiscordChatBot chatBot, List<Command> commands){
+    private void registerActions(DiscordChatBot chatBot) {
+        GatewayDiscordClient client = chatBot.getClient();
+
+        client.getEventDispatcher().on(MessageCreateEvent.class)
+                .map(MessageCreateEvent::getMessage)
+                .filter(message -> message.getAuthor().map(user -> !user.isBot()).orElse(false))
+                .filter(message -> message.getContent().startsWith("!join"))
+                .flatMap(message -> message.getAuthorAsMember())
+                .flatMap(member -> member.getVoiceState())
+                .flatMap(VoiceState::getChannel)
+                // join returns a VoiceConnection which would be required if we were
+                // adding disconnection features, but for now we are just ignoring it.
+                .flatMap(channel -> channel.join())
+                .subscribe();
+
+        client.getEventDispatcher().on(MessageCreateEvent.class)
+                .map(MessageCreateEvent::getMessage)
+                .filter(message -> message.getAuthor().map(user -> !user.isBot()).orElse(false))
+                .filter(message -> message.getContent().startsWith("!out"))
+                .flatMap(message -> message.getAuthorAsMember())
+                .flatMap(member -> member.getVoiceState())
+                .flatMap(VoiceState::getChannel)
+                // join returns a VoiceConnection which would be required if we were
+                // adding disconnection features, but for now we are just ignoring it.
+                .flatMap(channel -> channel.getVoiceConnection())
+                .flatMap(connection -> connection.disconnect())
+                .subscribe();
+    }
+
+    private void registerCommands(DiscordChatBot chatBot, List<Command> commands){
         GatewayDiscordClient client = chatBot.getClient();
         for (Command command : commands) {
             client.getEventDispatcher().on(MessageCreateEvent.class)
