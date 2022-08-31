@@ -33,9 +33,9 @@ public class DiscordChatBotFactory implements ChatBotFactory {
         GatewayDiscordClient client = DiscordClientBuilder.create(DISCORD_TOKEN_ID).build().login().block();
         AudioProvider provider = LavaPlayerAudioProvider.createAudioProvider();
         DiscordChatBot chatBot = new DiscordChatBot(client, provider);
-
-        // Discord 챗봇 초기설정
-        DiscordActionFactory.init(chatBot, actions);
+        chatBot.onCreated();
+        chatBot.registerActions(actions);
+        chatBot.onDestroy();
         return chatBot;
     }
 }

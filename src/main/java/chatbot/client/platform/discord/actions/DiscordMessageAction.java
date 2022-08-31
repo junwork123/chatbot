@@ -1,6 +1,6 @@
 package chatbot.client.platform.discord.actions;
 
-import chatbot.client.action.ActionKind;
+import chatbot.client.action.PredefinedCommand;
 import chatbot.client.action.Action;
 import discord4j.core.GatewayDiscordClient;
 import discord4j.core.event.domain.message.MessageCreateEvent;
@@ -13,11 +13,11 @@ import reactor.core.publisher.Flux;
 @Getter
 public class DiscordMessageAction {
     private DiscordMessageAction(){}
-    public static Flux<Message> registerCommand(GatewayDiscordClient client, ActionKind action){
+    public static Flux<Message> registerCommand(GatewayDiscordClient client, PredefinedCommand command){
         return new Builder()
                 .getMessageFromClient(client)
-                .filterCommand(action.getStartCommand())
-                .createMessage(action.getDisplayMessage())
+                .filterCommand(command.getStartCommand())
+                .createMessage(command.getDisplayMessage())
                 .Build();
     }
     public static Flux<Message> registerCommand(GatewayDiscordClient client, Action action){
