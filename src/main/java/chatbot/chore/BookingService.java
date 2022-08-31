@@ -8,8 +8,6 @@ package chatbot.chore;
 //@Service
 //@RequestMapping("/booking")
 //public class BookingService {
-////    @Autowired
-////    private ClientController clientController;
 ////
 ////    @RequestMapping
 ////    public void book(@RequestParam MessageChannel channel) throws MalformedURLException {
@@ -37,7 +35,7 @@ package chatbot.chore;
 ////                "big D: is setImage\n" +
 ////                "small D: is setThumbnail\n" +
 ////                "<-- setColor");        builder.addField("addField", "inline = true", true);
-////        builder.addField("addFIeld", "inline = true", true);
+////        builder.addField("addField", "inline = true", true);
 ////        builder.addField("addFile", "inline = false", false);
 ////        builder.thumbnail(IMAGE_URL);
 ////        builder.footer("setFooter --> setTimestamp", IMAGE_URL);

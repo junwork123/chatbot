@@ -1,28 +1,21 @@
 package chatbot.client.platform.discord;
 
+import chatbot.client.action.Action;
 import chatbot.client.command.Command;
 import chatbot.client.core.ChatBot;
 import chatbot.client.core.ChatBotFactory;
 import chatbot.client.platform.discord.audioProvider.LavaPlayerAudioProvider;
-import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
-import com.sedmelluq.discord.lavaplayer.player.AudioPlayerManager;
-import com.sedmelluq.discord.lavaplayer.player.DefaultAudioPlayerManager;
-import com.sedmelluq.discord.lavaplayer.source.AudioSourceManagers;
-import com.sedmelluq.discord.lavaplayer.track.playback.NonAllocatingAudioFrameBuffer;
 import discord4j.core.DiscordClientBuilder;
 import discord4j.core.GatewayDiscordClient;
-import discord4j.core.event.domain.lifecycle.*;
+import discord4j.core.event.domain.lifecycle.ReadyEvent;
 import discord4j.core.event.domain.message.MessageCreateEvent;
 import discord4j.core.object.VoiceState;
-import discord4j.core.object.entity.Member;
 import discord4j.core.object.entity.User;
-import discord4j.core.object.entity.channel.Channel;
 import discord4j.voice.AudioProvider;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * 로아봇 상태에 따른 이벤트 종류
@@ -60,7 +53,7 @@ public class DiscordChatBotFactory implements ChatBotFactory {
         client.getEventDispatcher().on(MessageCreateEvent.class)
                 .map(MessageCreateEvent::getMessage)
                 .filter(message -> message.getAuthor().map(user -> !user.isBot()).orElse(false))
-                .filter(message -> message.getContent().startsWith("!join"))
+                .filter(message -> message.getContent().startsWith(Action.JOIN.getStartCommand()))
                 .map(message -> {
                     message.getChannel().
                             flatMap(channel -> channel.createMessage("i joined a channel"))
@@ -78,7 +71,7 @@ public class DiscordChatBotFactory implements ChatBotFactory {
         client.getEventDispatcher().on(MessageCreateEvent.class)
                 .map(MessageCreateEvent::getMessage)
                 .filter(message -> message.getAuthor().map(user -> !user.isBot()).orElse(false))
-                .filter(message -> message.getContent().startsWith("!out"))
+                .filter(message -> message.getContent().startsWith(Action.OUT.getStartCommand()))
                 .flatMap(message -> {
                     message.getChannel().
                             flatMap(channel -> channel.createMessage("i'm out"))
