@@ -1,9 +1,9 @@
 package chatbot.client.core;
 
-import chatbot.client.command.Command;
+import chatbot.client.action.Action;
 
 import java.util.List;
 
 public interface ChatBotFactory {
-    public ChatBot CreateChatBot(List<Command> commands);
+    public ChatBot CreateChatBot(List<Action> actions);
 }

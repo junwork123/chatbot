@@ -1,13 +1,13 @@
-package chatbot.client.command;
+package chatbot.client.action;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter @Setter
-public class CommandVO {
+public class Command {
     private String startCommand;
     private String description;
-    private String response;
+    private String displayMessage;
     private String platformName;
     private String templateName;
 }

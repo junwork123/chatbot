@@ -1,7 +1,7 @@
 {
   "startCommand": "!ping",
   "description": "기본 커맨드",
-  "response" : "pong!",
+  "displayMessage" : "pong!",
   "platformName": "DISCORD",
   "templateName": "TEXT"
 }

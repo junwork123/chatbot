@@ -1,7 +1,6 @@
 package chatbot.client.action;
 
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 
 @Getter
 public enum ActionKind {

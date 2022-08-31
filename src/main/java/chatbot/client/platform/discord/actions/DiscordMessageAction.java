@@ -1,20 +1,36 @@
 package chatbot.client.platform.discord.actions;
 
+import chatbot.client.action.ActionKind;
 import chatbot.client.action.Action;
-import chatbot.client.command.Command;
 import discord4j.core.GatewayDiscordClient;
 import discord4j.core.event.domain.message.MessageCreateEvent;
 import discord4j.core.object.entity.Message;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Flux;
 
 @Slf4j
-public class DiscordMessageAction implements Action{
-
+@Getter
+public class DiscordMessageAction {
     private DiscordMessageAction(){}
+    public static Flux<Message> registerCommand(GatewayDiscordClient client, ActionKind action){
+        return new Builder()
+                .getMessageFromClient(client)
+                .filterCommand(action.getStartCommand())
+                .createMessage(action.getDisplayMessage())
+                .Build();
+    }
+    public static Flux<Message> registerCommand(GatewayDiscordClient client, Action action){
+        return new Builder()
+                .getMessageFromClient(client)
+                .filterCommand(action.getCommand().getStartCommand())
+                .executeCommand(action)
+                .Build();
+    }
+
     public static class Builder{
         Flux<Message> messageFlux;
-
+        String command;
         public Builder(){}
 
         public Flux<Message> Build(){
@@ -28,6 +44,7 @@ public class DiscordMessageAction implements Action{
         }
 
         public Builder filterCommand(String startCommand){
+            this.command = startCommand;
             messageFlux = messageFlux
                     .filter(message -> message.getAuthor().map(user -> !user.isBot()).orElse(false))
                     .filter(message -> message.getContent().startsWith(startCommand));
@@ -44,9 +61,9 @@ public class DiscordMessageAction implements Action{
             return this;
         }
 
-        public Builder executeCommand(Command command){
+        public Builder executeCommand(Action action){
             messageFlux = messageFlux.map(message -> {
-                String response = command.execute(message.getContent());
+                String response = action.execute(message.getContent());
                 message.getChannel().flatMap(channel -> channel.createMessage(response))
                         .subscribe();
                 return message;

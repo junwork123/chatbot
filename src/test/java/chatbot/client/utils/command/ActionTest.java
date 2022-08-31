@@ -1,7 +1,7 @@
 package chatbot.client.utils.command;
 
-import chatbot.client.command.Command;
-import chatbot.client.command.CommandBuilder;
+import chatbot.client.action.Action;
+import chatbot.client.action.ActionBuilder;
 import chatbot.client.domain.lostArkAuction.LostArkAuctionController;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
@@ -13,8 +13,8 @@ import java.util.List;
 
 import static chatbot.client.utils.ConstUtils.JSON_PATH;
 
-class CommandTest {
-    CommandBuilder commandBuilder;
+class ActionTest {
+    ActionBuilder actionBuilder;
     final String testPath = JSON_PATH + "ping.json";
     final String testContent =
             "{\n" +
@@ -35,13 +35,13 @@ class CommandTest {
     @Test
     public void JSON_읽어오기() throws IOException{
         //given
-        commandBuilder = new CommandBuilder.Builder().addCommand("입찰", new LostArkAuctionController()).build();
+        actionBuilder = new ActionBuilder.Builder().addCommand("입찰", new LostArkAuctionController()).build();
 
         //when
-        List<Command> commands = commandBuilder.getCommands();
+        List<Action> actions = actionBuilder.getActions();
 
         //then
-        Assertions.assertThat(commands.size()).isEqualTo(1);
-        Assertions.assertThat(commands.get(0).vo.getStartCommand()).isEqualTo("!입찰");
+        Assertions.assertThat(actions.size()).isEqualTo(1);
+        Assertions.assertThat(actions.get(0).command.getStartCommand()).isEqualTo("!입찰");
     }
 }
