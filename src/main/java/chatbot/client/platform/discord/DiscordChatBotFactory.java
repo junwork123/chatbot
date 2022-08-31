@@ -1,19 +1,24 @@
 package chatbot.client.platform.discord;
 
-import chatbot.client.action.Action;
+import chatbot.client.action.ActionKind;
 import chatbot.client.command.Command;
 import chatbot.client.core.ChatBot;
 import chatbot.client.core.ChatBotFactory;
+import chatbot.client.platform.discord.actions.DiscordMessageAction;
+import chatbot.client.platform.discord.actions.DiscordVoiceAction;
 import chatbot.client.platform.discord.audioProvider.LavaPlayerAudioProvider;
 import discord4j.core.DiscordClientBuilder;
 import discord4j.core.GatewayDiscordClient;
 import discord4j.core.event.domain.lifecycle.ReadyEvent;
 import discord4j.core.event.domain.message.MessageCreateEvent;
 import discord4j.core.object.VoiceState;
+import discord4j.core.object.entity.Message;
 import discord4j.core.object.entity.User;
+import discord4j.core.object.entity.channel.VoiceChannel;
 import discord4j.voice.AudioProvider;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import reactor.core.publisher.Flux;
 
 import java.util.List;
 
@@ -50,61 +55,36 @@ public class DiscordChatBotFactory implements ChatBotFactory {
     private void registerActions(DiscordChatBot chatBot) {
         GatewayDiscordClient client = chatBot.getClient();
 
-        client.getEventDispatcher().on(MessageCreateEvent.class)
-                .map(MessageCreateEvent::getMessage)
-                .filter(message -> message.getAuthor().map(user -> !user.isBot()).orElse(false))
-                .filter(message -> message.getContent().startsWith(Action.JOIN.getStartCommand()))
-                .map(message -> {
-                    message.getChannel().
-                            flatMap(channel -> channel.createMessage("i joined a channel"))
-                            .subscribe();
-                    return message;
-                })
-                .flatMap(message -> message.getAuthorAsMember())
-                .flatMap(member -> member.getVoiceState())
-                .flatMap(VoiceState::getChannel)
-                // join returns a VoiceConnection which would be required if we were
-                // adding disconnection features, but for now we are just ignoring it.
-                .flatMap(channel -> channel.join())
-                .subscribe();
+        Flux<Message> joinFlux = new DiscordMessageAction.Builder()
+                .getMessageFromClient(client)
+                .filterCommand(ActionKind.JOIN.getStartCommand())
+                .createMessage(ActionKind.JOIN.getDisplayMessage())
+                .Build();
 
-        client.getEventDispatcher().on(MessageCreateEvent.class)
-                .map(MessageCreateEvent::getMessage)
-                .filter(message -> message.getAuthor().map(user -> !user.isBot()).orElse(false))
-                .filter(message -> message.getContent().startsWith(Action.OUT.getStartCommand()))
-                .flatMap(message -> {
-                    message.getChannel().
-                            flatMap(channel -> channel.createMessage("i'm out"))
-                            .subscribe();
-                    return message.getAuthorAsMember();
-                })
-                .flatMap(member -> member.getVoiceState())
-                .flatMap(VoiceState::getChannel)
-                .flatMap(voiceChannel -> voiceChannel.getVoiceConnection())
-                .flatMap(connection -> connection.disconnect())
-                .subscribe();
+        Flux<VoiceChannel> joinVoiceChannelFlux = new DiscordVoiceAction.Builder()
+                                                                .joinVoiceChannel(joinFlux)
+                                                                .Build();
+
+        Flux<Message> outFlux = new DiscordMessageAction.Builder()
+                .getMessageFromClient(client)
+                .filterCommand(ActionKind.OUT.getStartCommand())
+                .createMessage(ActionKind.OUT.getDisplayMessage())
+                .Build();
+
+        Flux<VoiceChannel> leaveVoiceChannelFlux = new DiscordVoiceAction.Builder()
+                                                                .leaveVoiceChannel(outFlux)
+                                                                .Build();
     }
 
     private void registerCommands(DiscordChatBot chatBot, List<Command> commands){
         GatewayDiscordClient client = chatBot.getClient();
         for (Command command : commands) {
-            client.getEventDispatcher().on(MessageCreateEvent.class)
-                    .map(MessageCreateEvent::getMessage)
-                    .filter(message -> message.getAuthor().map(user -> !user.isBot()).orElse(false))
-                    .filter(message -> message.getContent().startsWith(command.vo.getStartCommand()))
-                    .map(message -> {
-                        String response = command.execute(message.getContent());
-                        message.getChannel().flatMap(channel -> channel.createMessage(response))
-                                .subscribe();
-                        return response;
-                    })
-                    .subscribe();
-
-//            메시지 보내는 방법(지우지 말 것)
-//            client.getChannelById(channelId)
-//                    .ofType(MessageChannel.class)
-//                    .flatMap(channel -> channel.createMessage(message))
-//                    .subscribe();
+            Flux<Message> messageFlux = new DiscordMessageAction.Builder()
+                    .getMessageFromClient(client)
+                    .filterCommand(command.vo.getStartCommand())
+                    .executeCommand(command)
+                    .Build();
+            messageFlux.subscribe();
         }
     }
 

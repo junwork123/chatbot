@@ -13,6 +13,25 @@ package chatbot.chore;
 ////    public void book(@RequestParam MessageChannel channel) throws MalformedURLException {
 ////
 
+
+//            client.getEventDispatcher().on(MessageCreateEvent.class)
+//                    .map(MessageCreateEvent::getMessage)
+//                    .filter(message -> message.getAuthor().map(user -> !user.isBot()).orElse(false))
+//                    .filter(message -> message.getContent().startsWith(command.vo.getStartCommand()))
+//                    .map(message -> {
+//                        String response = command.execute(message.getContent());
+//                        message.getChannel().flatMap(channel -> channel.createMessage(response))
+//                                .subscribe();
+//                        return message;
+//                    })
+//                    .subscribe();
+
+//            메시지 보내는 방법(지우지 말 것)
+//            client.getChannelById(channelId)
+//                    .ofType(MessageChannel.class)
+//                    .flatMap(channel -> channel.createMessage(message))
+//                    .subscribe();
+
 //channel.createMessage(MessageCreateSpec.builder()
 //        .content("Hello @everyone")
 //        .allowedMentions(AllowedMentions.suppressEveryone())
