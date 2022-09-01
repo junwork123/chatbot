@@ -2,6 +2,8 @@ package chatbot.client.platform.discord.actions;
 
 import discord4j.core.object.entity.Message;
 import discord4j.core.object.entity.channel.VoiceChannel;
+import discord4j.core.spec.VoiceChannelJoinSpec;
+import discord4j.voice.AudioProvider;
 import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Flux;
 
@@ -22,10 +24,12 @@ public class DiscordVoiceAction {
             return this;
         }
 
-        public Builder joinVoiceChannel(Flux<Message> messageFlux){
+        public Builder joinVoiceChannel(Flux<Message> messageFlux, AudioProvider provider){
             setVoiceState(messageFlux);
             voiceChannelFlux.map(channel -> {
-                channel.join().subscribe();
+                channel.join(VoiceChannelJoinSpec.builder()
+                                                .provider(provider)
+                                                .build()).subscribe();
                 return channel;
             }).subscribe();
             return this;
