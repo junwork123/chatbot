@@ -8,12 +8,29 @@ package chatbot.chore;
 //@Service
 //@RequestMapping("/booking")
 //public class BookingService {
-////    @Autowired
-////    private ClientController clientController;
 ////
 ////    @RequestMapping
 ////    public void book(@RequestParam MessageChannel channel) throws MalformedURLException {
 ////
+
+
+//            client.getEventDispatcher().on(MessageCreateEvent.class)
+//                    .map(MessageCreateEvent::getMessage)
+//                    .filter(message -> message.getAuthor().map(user -> !user.isBot()).orElse(false))
+//                    .filter(message -> message.getContent().startsWith(command.vo.getStartCommand()))
+//                    .map(message -> {
+//                        String response = command.execute(message.getContent());
+//                        message.getChannel().flatMap(channel -> channel.createMessage(response))
+//                                .subscribe();
+//                        return message;
+//                    })
+//                    .subscribe();
+
+//            메시지 보내는 방법(지우지 말 것)
+//            client.getChannelById(channelId)
+//                    .ofType(MessageChannel.class)
+//                    .flatMap(channel -> channel.createMessage(message))
+//                    .subscribe();
 
 //channel.createMessage(MessageCreateSpec.builder()
 //        .content("Hello @everyone")
@@ -37,7 +54,7 @@ package chatbot.chore;
 ////                "big D: is setImage\n" +
 ////                "small D: is setThumbnail\n" +
 ////                "<-- setColor");        builder.addField("addField", "inline = true", true);
-////        builder.addField("addFIeld", "inline = true", true);
+////        builder.addField("addField", "inline = true", true);
 ////        builder.addField("addFile", "inline = false", false);
 ////        builder.thumbnail(IMAGE_URL);
 ////        builder.footer("setFooter --> setTimestamp", IMAGE_URL);

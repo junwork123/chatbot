@@ -1,6 +1,12 @@
 package chatbot.client.core;
 
+import chatbot.client.action.Action;
+
+import javax.annotation.PostConstruct;
+import java.util.List;
+
 public interface ChatBot {
-//    public void request(Object message);
-//    public void response(String content);
+    public void onCreated();
+    public void registerActions(List<Action> actions);
+    public void onDestroy();
 }

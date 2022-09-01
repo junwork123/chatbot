@@ -1,4 +1,4 @@
-package chatbot.client.command;
+package chatbot.client.action;
 
 import chatbot.client.core.ChatBotController;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -16,32 +16,32 @@ import static chatbot.client.utils.ConstUtils.JSON_PATTERN;
 
 @Slf4j
 @Getter
-public class CommandBuilder {
-    private final List<Command> commands;
-    private CommandBuilder(Builder builder){
-        this.commands = builder.commands;
+public class ActionBuilder {
+    private final List<Action> actions;
+    private ActionBuilder(Builder builder){
+        this.actions = builder.actions;
     }
 
     public static class Builder{
-        private final List<Command> commands;
+        private final List<Action> actions;
         private final String path;
         private final String pattern;
 
         public Builder() {
-            commands = new ArrayList<>();
+            actions = new ArrayList<>();
             path = JSON_PATH;
             pattern = JSON_PATTERN;
         }
-        public CommandBuilder build(){
-            return new CommandBuilder(this);
+        public ActionBuilder build(){
+            return new ActionBuilder(this);
         }
 
         public Builder addCommand(String jsonFileName, ChatBotController controller) {
             String jsonString = readJsonFile(jsonFileName);
             ObjectMapper objectMapper = new ObjectMapper();
             try {
-                CommandVO commandVO = objectMapper.readValue(jsonString, CommandVO.class);
-                commands.add(new Command(controller, commandVO));
+                Command commandVO = objectMapper.readValue(jsonString, Command.class);
+                actions.add(new Action(controller, commandVO));
                 log.info("{} : {} {}", this.getClass(), commandVO.getStartCommand(), commandVO.getDescription());
 
             }catch (IOException e){

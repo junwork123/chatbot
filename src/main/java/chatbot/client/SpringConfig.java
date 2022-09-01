@@ -1,7 +1,7 @@
 package chatbot.client;
 
-import chatbot.client.command.Command;
-import chatbot.client.command.CommandBuilder;
+import chatbot.client.action.Action;
+import chatbot.client.action.ActionBuilder;
 import chatbot.client.core.ChatBot;
 import chatbot.client.core.ChatBotFactory;
 import chatbot.client.domain.lostArkAuction.LostArkAuctionController;
@@ -23,10 +23,10 @@ public class SpringConfig {
     @Bean
     public ChatBot chatBot(){
         ChatBotFactory chatBotFactory = discordChatBotFactory();
-        CommandBuilder commandBuilder = commandFactory();
+        ActionBuilder actionBuilder = commandFactory();
 
-        List<Command> commands = commandBuilder.getCommands();
-        ChatBot createdChatBot = chatBotFactory.CreateChatBot(commands);
+        List<Action> actions = actionBuilder.getActions();
+        ChatBot createdChatBot = chatBotFactory.CreateChatBot(actions);
         return createdChatBot;
     }
     @Bean
@@ -35,8 +35,8 @@ public class SpringConfig {
     }
 
     @Bean
-    public CommandBuilder commandFactory() {
-        return new CommandBuilder.Builder()
+    public ActionBuilder commandFactory() {
+        return new ActionBuilder.Builder()
                 .addCommand("ping", new PingPongController())
                 .addCommand("auction",new LostArkAuctionController())
                 .build();

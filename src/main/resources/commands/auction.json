@@ -1,7 +1,7 @@
 {
   "startCommand": "!입찰",
   "description": "경매 입찰시 손익분기점 계산(4인/8인)",
-  "response" : "pong!",
+  "displayMessage" : "pong!",
   "platformName": "DISCORD",
   "templateName": "TEXT"
 }

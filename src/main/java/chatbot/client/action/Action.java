@@ -1,4 +1,4 @@
-package chatbot.client.command;
+package chatbot.client.action;
 
 import chatbot.client.core.ChatBotController;
 import chatbot.client.platform.discord.DiscordMessageTemplate;
@@ -10,13 +10,13 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Getter
 @RequiredArgsConstructor
-public class Command{
+public class Action {
     public final ChatBotController controller;
-    public final CommandVO vo;
+    public final Command command;
     public String execute(String message){
-        String content = parseMessageWithCommand(message, vo.getStartCommand());
-        log.info("템플릿 양식 {} : {}", vo.getPlatformName(), vo.getTemplateName());
-        MessageTemplateFactory.findTemplate(vo.getPlatformName(), vo.getTemplateName());
+        String content = parseMessageWithCommand(message, command.getStartCommand());
+        log.info("템플릿 양식 {} : {}", command.getPlatformName(), command.getTemplateName());
+        MessageTemplateFactory.findTemplate(command.getPlatformName(), command.getTemplateName());
         return controller.response(DiscordMessageTemplate.TEXT, content).getResponse().getMessage();
     }
 
