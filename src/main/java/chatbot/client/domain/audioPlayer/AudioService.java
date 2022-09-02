@@ -12,8 +12,10 @@ import com.sedmelluq.discord.lavaplayer.track.AudioPlaylist;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import discord4j.voice.AudioProvider;
 import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -21,10 +23,10 @@ import java.util.Optional;
 import static com.google.common.base.Preconditions.checkNotNull;
 import static java.util.Optional.ofNullable;
 @Slf4j
+@RequiredArgsConstructor
 @Service
 public class AudioService implements ChatBotService {
-    @Autowired
-    private ChatBot chatBot;
+    private final ChatBot chatBot;
 
     @Override
     public Optional<MessageTemplate> makeResponse(@NonNull MessageTemplate template, @NonNull String content) {
