@@ -12,7 +12,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 @Slf4j
-@Component
 @RequiredArgsConstructor
 public class TrackScheduler implements AudioLoadResultHandler {
     private final AudioPlayer player;

@@ -9,12 +9,14 @@ import com.sedmelluq.discord.lavaplayer.track.playback.MutableAudioFrame;
 import com.sedmelluq.discord.lavaplayer.track.playback.NonAllocatingAudioFrameBuffer;
 import discord4j.voice.AudioProvider;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.nio.ByteBuffer;
 
 
 @Getter
+@RequiredArgsConstructor
 @Component
 public final class LavaPlayerAudioProvider extends AudioProvider {
     private final AudioPlayerManager playerManager;
