@@ -4,16 +4,19 @@ import chatbot.client.core.ChatBotController;
 import chatbot.client.message.MessageDto;
 import chatbot.client.message.MessageTemplate;
 import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 
 import static chatbot.client.utils.ApiUtils.*;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 @Slf4j
+@RequiredArgsConstructor
+@Controller
 public class PingPongController implements ChatBotController {
-    @Autowired
-    private final PingPongService service = new PingPongService();
+    private final PingPongService service;
 
     @Override
     public ApiResult<MessageDto> response(MessageTemplate template, @NonNull String content) {
