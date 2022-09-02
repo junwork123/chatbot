@@ -3,8 +3,10 @@ package chatbot.client.platform.discord;
 import chatbot.client.action.Action;
 import chatbot.client.action.PredefinedCommand;
 import chatbot.client.core.ChatBot;
+import chatbot.client.message.MessageTemplate;
 import chatbot.client.platform.discord.actions.DiscordMessageAction;
 import chatbot.client.platform.discord.actions.DiscordVoiceAction;
+import chatbot.client.platform.discord.audio.LavaPlayerAudioProvider;
 import discord4j.core.GatewayDiscordClient;
 import discord4j.core.event.domain.lifecycle.ReadyEvent;
 import discord4j.core.object.entity.Message;
@@ -14,17 +16,22 @@ import discord4j.voice.AudioProvider;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 import reactor.core.publisher.Flux;
 
 import javax.annotation.PostConstruct;
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
 @Getter
 @RequiredArgsConstructor
 public class DiscordChatBot implements ChatBot {
+    public static final List<MessageTemplate> templates = new ArrayList<>();
     private final GatewayDiscordClient client;
-    private final AudioProvider provider;
+    private final LavaPlayerAudioProvider provider;
 
     @Override
     @PostConstruct
@@ -42,7 +49,7 @@ public class DiscordChatBot implements ChatBot {
         // 음성채팅 입장 액션 추가
         Flux<Message> joinFlux = DiscordMessageAction.registerCommand(client, PredefinedCommand.JOIN);
         Flux<VoiceChannel> joinVoiceChannelFlux = new DiscordVoiceAction.Builder()
-                .joinVoiceChannel(joinFlux)
+                .joinVoiceChannel(joinFlux, provider)
                 .Build();
 
         // 음성채팅 퇴장 액션 추가
@@ -59,9 +66,15 @@ public class DiscordChatBot implements ChatBot {
     }
 
     @Override
+    public void registerMessageTemplates(List<MessageTemplate> templates) {
+        DiscordChatBot.templates.addAll(templates);
+    }
+
+    @Override
     @PostConstruct
     public void onDestroy() {
         client.onDisconnect().block();
+        log.info("챗봇 종료");
     }
 }
 
