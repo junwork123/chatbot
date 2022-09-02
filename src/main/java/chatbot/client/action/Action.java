@@ -1,8 +1,9 @@
 package chatbot.client.action;
 
 import chatbot.client.core.ChatBotController;
+import chatbot.client.message.MessageTemplate;
+import chatbot.client.platform.discord.DiscordChatBot;
 import chatbot.client.platform.discord.DiscordMessageTemplate;
-import chatbot.client.message.MessageTemplateFactory;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,7 +17,7 @@ public class Action {
     public String execute(String message){
         String content = parseMessageWithCommand(message, command.getStartCommand());
         log.info("템플릿 양식 {} : {}", command.getPlatformName(), command.getTemplateName());
-        MessageTemplateFactory.findTemplate(command.getPlatformName(), command.getTemplateName());
+        MessageTemplate.findTemplate(DiscordChatBot.templates, command);
         return controller.response(DiscordMessageTemplate.TEXT, content).getResponse().getMessage();
     }
 
