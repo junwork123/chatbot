@@ -42,7 +42,7 @@ public class ActionBuilder {
             try {
                 Command commandVO = objectMapper.readValue(jsonString, Command.class);
                 actions.add(new Action(controller, commandVO));
-                log.info("{} : {} {}", this.getClass(), commandVO.getStartCommand(), commandVO.getDescription());
+                log.info("커맨드 추가 : {} {}", commandVO.getStartCommand(), commandVO.getDescription());
 
             }catch (IOException e){
                 e.toString();

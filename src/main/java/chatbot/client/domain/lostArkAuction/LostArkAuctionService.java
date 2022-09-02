@@ -18,9 +18,9 @@ public class LostArkAuctionService implements ChatBotService {
         String responseBody = new StringBuilder()
                                         .append("4인 기준 : ")
                                         .append(Math.round(price * 0.71))
-                                        .append(", 8인 기준 : ")
+                                        .append("\n8인 기준 : ")
                                         .append(Math.round(price * 0.83))
-                                        .append(", 16인 기준 : ")
+                                        .append("\n16인 기준 : ")
                                         .append(Math.round(price * 0.89))
                                         .toString();
         template.convert(responseBody);

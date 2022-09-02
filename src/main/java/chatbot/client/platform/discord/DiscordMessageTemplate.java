@@ -1,17 +1,17 @@
 package chatbot.client.platform.discord;
 
+import chatbot.client.action.Command;
 import chatbot.client.message.MessageTemplate;
 import lombok.Getter;
 import java.util.List;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 @Getter
 public enum DiscordMessageTemplate implements MessageTemplate {
-    /*
-     @Naming Rule : 플랫폼명_템플릿명("플랫폼명 템플릿명", "템플릿 내용");
-     */
     TEXT("TEXT", "템플릿 내용");
 
-    private String platform = "DISCORD";
+    private String platformName = "DISCORD";
     private String templateName;
     private String message;
     private String template;
