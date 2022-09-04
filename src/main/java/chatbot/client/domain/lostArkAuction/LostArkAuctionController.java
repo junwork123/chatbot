@@ -1,12 +1,11 @@
 package chatbot.client.domain.lostArkAuction;
 
 import chatbot.client.core.ChatBotController;
-import chatbot.client.core.Responsible;
+import chatbot.client.core.Answerable;
 import chatbot.client.core.message.MessageDto;
 import chatbot.client.core.message.MessageTemplate;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Controller;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static chatbot.client.utils.ApiUtils.*;
@@ -14,7 +13,7 @@ import static chatbot.client.utils.ApiUtils.*;
 @Slf4j
 @RequiredArgsConstructor
 @ChatBotController
-public class LostArkAuctionController implements Responsible {
+public class LostArkAuctionController implements Answerable {
     private final LostArkAuctionService service;
 
     @Override

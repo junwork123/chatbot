@@ -1,6 +1,6 @@
 package chatbot.client.core.action;
 
-import chatbot.client.core.Responsible;
+import chatbot.client.core.Answerable;
 import chatbot.client.core.message.MessageTemplate;
 import chatbot.client.platform.discord.DiscordChatBot;
 import chatbot.client.platform.discord.DiscordMessageTemplate;
@@ -12,7 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 @Getter
 @RequiredArgsConstructor
 public class Action {
-    public final Responsible controller;
+    public final Answerable controller;
     public final Command command;
     public String execute(String message){
         String content = parseMessageWithCommand(message, command.getStartCommand());

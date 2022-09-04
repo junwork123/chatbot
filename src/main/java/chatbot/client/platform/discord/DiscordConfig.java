@@ -1,6 +1,6 @@
 package chatbot.client.platform.discord;
 
-import chatbot.client.core.Responsible;
+import chatbot.client.core.Answerable;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 public class DiscordConfig {
     @Bean
     @ConditionalOnMissingBean
-    public DiscordDispatcher discordDispatcher(Responsible controller) {
+    public DiscordDispatcher discordDispatcher(Answerable controller) {
         return new DiscordDispatcher(controller);
     }
 

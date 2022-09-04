@@ -1,7 +1,7 @@
 package chatbot.client.core.event;
 
 import chatbot.client.core.action.Action;
-import chatbot.client.core.Responsible;
+import chatbot.client.core.Answerable;
 import chatbot.client.core.dispatcher.Dispatcher;
 import chatbot.client.core.message.MessageDto;
 import chatbot.client.platform.discord.DiscordMessageTemplate;
@@ -17,9 +17,9 @@ import static chatbot.client.utils.ApiUtils.*;
 public class Event {
     private Dispatcher dispatcher;
     private Action action;
-    private Responsible controller;
+    private Answerable controller;
 
-    public Event(Dispatcher dispatcher, Action action, Responsible controller) {
+    public Event(Dispatcher dispatcher, Action action, Answerable controller) {
         this.dispatcher = dispatcher;
         this.action = action;
         this.controller = controller;
