@@ -14,7 +14,6 @@ import java.util.List;
 @Slf4j
 @RequiredArgsConstructor
 public class TaskRunner {
-
     private final ThreadPoolTaskExecutor executor;
     private final EventQueue eventQueue;
     private final List<EventSensor> eventSensors;
