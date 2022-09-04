@@ -1,9 +1,8 @@
 package chatbot.client.core;
 
-import chatbot.client.message.MessageDto;
-import chatbot.client.message.MessageTemplate;
+import chatbot.client.core.message.MessageDto;
+import chatbot.client.core.message.MessageTemplate;
 import lombok.NonNull;
-import org.springframework.stereotype.Controller;
 
 import static chatbot.client.utils.ApiUtils.ApiResult;
 

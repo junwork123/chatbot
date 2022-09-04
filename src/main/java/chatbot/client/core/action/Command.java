@@ -1,4 +1,4 @@
-package chatbot.client.action;
+package chatbot.client.core.action;
 
 import lombok.Getter;
 import lombok.Setter;

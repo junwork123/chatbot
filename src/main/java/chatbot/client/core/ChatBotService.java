@@ -1,6 +1,6 @@
 package chatbot.client.core;
 
-import chatbot.client.message.MessageTemplate;
+import chatbot.client.core.message.MessageTemplate;
 import lombok.NonNull;
 
 import java.util.Optional;

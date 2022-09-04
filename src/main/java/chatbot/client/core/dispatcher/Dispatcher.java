@@ -1,7 +1,7 @@
 package chatbot.client.core.dispatcher;
 
-import chatbot.client.action.Action;
-import chatbot.client.message.MessageDto;
+import chatbot.client.core.action.Action;
+import chatbot.client.core.message.MessageDto;
 
 import static chatbot.client.utils.ApiUtils.ApiResult;
 

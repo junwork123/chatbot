@@ -1,9 +1,9 @@
 package chatbot.client.platform.discord;
 
-import chatbot.client.action.Action;
-import chatbot.client.action.PredefinedCommand;
+import chatbot.client.core.action.Action;
+import chatbot.client.core.action.PredefinedCommand;
 import chatbot.client.core.ChatBot;
-import chatbot.client.message.MessageTemplate;
+import chatbot.client.core.message.MessageTemplate;
 import chatbot.client.platform.discord.actions.DiscordMessageAction;
 import chatbot.client.platform.discord.actions.DiscordVoiceAction;
 import chatbot.client.platform.discord.audio.LavaPlayerAudioProvider;
@@ -12,13 +12,9 @@ import discord4j.core.event.domain.lifecycle.ReadyEvent;
 import discord4j.core.object.entity.Message;
 import discord4j.core.object.entity.User;
 import discord4j.core.object.entity.channel.VoiceChannel;
-import discord4j.voice.AudioProvider;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Controller;
 import reactor.core.publisher.Flux;
 
 import javax.annotation.PostConstruct;

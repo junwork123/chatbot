@@ -1,7 +1,6 @@
 package chatbot.client.platform.discord;
 
-import chatbot.client.action.Command;
-import chatbot.client.message.MessageTemplate;
+import chatbot.client.core.message.MessageTemplate;
 import lombok.Getter;
 import java.util.List;
 

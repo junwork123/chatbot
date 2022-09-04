@@ -1,7 +1,7 @@
 package chatbot.client.utils.command;
 
-import chatbot.client.action.Action;
-import chatbot.client.action.ActionBuilder;
+import chatbot.client.core.action.Action;
+import chatbot.client.core.action.ActionBuilder;
 import chatbot.client.domain.lostArkAuction.LostArkAuctionController;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;

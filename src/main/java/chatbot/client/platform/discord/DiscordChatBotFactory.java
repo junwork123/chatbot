@@ -1,13 +1,11 @@
 package chatbot.client.platform.discord;
 
-import chatbot.client.action.Action;
+import chatbot.client.core.action.Action;
 import chatbot.client.core.ChatBot;
 import chatbot.client.core.ChatBotFactory;
 import chatbot.client.platform.discord.audio.LavaPlayerAudioProvider;
 import discord4j.core.DiscordClientBuilder;
 import discord4j.core.GatewayDiscordClient;
-import discord4j.voice.AudioProvider;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;

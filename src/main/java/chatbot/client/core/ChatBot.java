@@ -1,7 +1,7 @@
 package chatbot.client.core;
 
-import chatbot.client.action.Action;
-import chatbot.client.message.MessageTemplate;
+import chatbot.client.core.action.Action;
+import chatbot.client.core.message.MessageTemplate;
 
 import java.util.List;
 

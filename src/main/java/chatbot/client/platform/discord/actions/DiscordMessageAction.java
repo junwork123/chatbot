@@ -1,7 +1,7 @@
 package chatbot.client.platform.discord.actions;
 
-import chatbot.client.action.PredefinedCommand;
-import chatbot.client.action.Action;
+import chatbot.client.core.action.PredefinedCommand;
+import chatbot.client.core.action.Action;
 import discord4j.core.GatewayDiscordClient;
 import discord4j.core.event.domain.message.MessageCreateEvent;
 import discord4j.core.object.entity.Message;

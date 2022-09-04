@@ -2,20 +2,13 @@ package chatbot.client.domain.audioPlayer;
 
 import chatbot.client.core.ChatBot;
 import chatbot.client.core.ChatBotService;
-import chatbot.client.message.MessageTemplate;
+import chatbot.client.core.message.MessageTemplate;
 import chatbot.client.platform.discord.DiscordChatBot;
 import chatbot.client.platform.discord.audio.LavaPlayerAudioProvider;
 import chatbot.client.platform.discord.audio.TrackScheduler;
-import com.sedmelluq.discord.lavaplayer.player.AudioLoadResultHandler;
-import com.sedmelluq.discord.lavaplayer.tools.FriendlyException;
-import com.sedmelluq.discord.lavaplayer.track.AudioPlaylist;
-import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
-import discord4j.voice.AudioProvider;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;

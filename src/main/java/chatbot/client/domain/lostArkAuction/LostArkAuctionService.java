@@ -1,7 +1,7 @@
 package chatbot.client.domain.lostArkAuction;
 
 import chatbot.client.core.ChatBotService;
-import chatbot.client.message.MessageTemplate;
+import chatbot.client.core.message.MessageTemplate;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import java.util.Optional;

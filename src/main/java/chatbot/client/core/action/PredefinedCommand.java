@@ -1,6 +1,4 @@
-package chatbot.client.action;
-
-import lombok.Getter;
+package chatbot.client.core.action;
 
 public enum PredefinedCommand {
     JOIN("!join", "음성채팅 입장", "i joined a channel"),

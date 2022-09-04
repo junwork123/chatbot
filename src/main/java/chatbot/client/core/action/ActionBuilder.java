@@ -1,4 +1,4 @@
-package chatbot.client.action;
+package chatbot.client.core.action;
 
 import chatbot.client.core.ChatBotController;
 import com.fasterxml.jackson.databind.ObjectMapper;

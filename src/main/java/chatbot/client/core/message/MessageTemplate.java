@@ -1,6 +1,6 @@
-package chatbot.client.message;
+package chatbot.client.core.message;
 
-import chatbot.client.action.Command;
+import chatbot.client.core.action.Command;
 
 import java.util.List;
 

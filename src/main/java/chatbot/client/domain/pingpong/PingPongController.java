@@ -1,12 +1,11 @@
 package chatbot.client.domain.pingpong;
 
 import chatbot.client.core.ChatBotController;
-import chatbot.client.message.MessageDto;
-import chatbot.client.message.MessageTemplate;
+import chatbot.client.core.message.MessageDto;
+import chatbot.client.core.message.MessageTemplate;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import static chatbot.client.utils.ApiUtils.*;

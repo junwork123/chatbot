@@ -1,7 +1,7 @@
-package chatbot.client.action;
+package chatbot.client.core.action;
 
 import chatbot.client.core.ChatBotController;
-import chatbot.client.message.MessageTemplate;
+import chatbot.client.core.message.MessageTemplate;
 import chatbot.client.platform.discord.DiscordChatBot;
 import chatbot.client.platform.discord.DiscordMessageTemplate;
 import lombok.Getter;

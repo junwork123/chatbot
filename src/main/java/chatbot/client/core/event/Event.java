@@ -1,9 +1,9 @@
 package chatbot.client.core.event;
 
-import chatbot.client.action.Action;
+import chatbot.client.core.action.Action;
 import chatbot.client.core.ChatBotController;
 import chatbot.client.core.dispatcher.Dispatcher;
-import chatbot.client.message.MessageDto;
+import chatbot.client.core.message.MessageDto;
 import chatbot.client.platform.discord.DiscordMessageTemplate;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
