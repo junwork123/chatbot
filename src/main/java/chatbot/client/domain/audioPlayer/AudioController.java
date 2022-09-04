@@ -1,6 +1,7 @@
 package chatbot.client.domain.audioPlayer;
 
 import chatbot.client.core.ChatBotController;
+import chatbot.client.core.Responsible;
 import chatbot.client.core.message.MessageDto;
 import chatbot.client.core.message.MessageTemplate;
 import chatbot.client.utils.ApiUtils;
@@ -12,8 +13,8 @@ import static chatbot.client.utils.ApiUtils.success;
 
 
 @RequiredArgsConstructor
-@Controller
-public class AudioController implements ChatBotController {
+@ChatBotController
+public class AudioController implements Responsible {
     private final AudioService service;
     @Override
     public ApiUtils.ApiResult<MessageDto> response(@NonNull MessageTemplate template, @NonNull String content) {

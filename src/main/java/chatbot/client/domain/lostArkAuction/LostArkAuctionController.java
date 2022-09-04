@@ -1,6 +1,7 @@
 package chatbot.client.domain.lostArkAuction;
 
 import chatbot.client.core.ChatBotController;
+import chatbot.client.core.Responsible;
 import chatbot.client.core.message.MessageDto;
 import chatbot.client.core.message.MessageTemplate;
 import lombok.RequiredArgsConstructor;
@@ -12,8 +13,8 @@ import static chatbot.client.utils.ApiUtils.*;
 
 @Slf4j
 @RequiredArgsConstructor
-@Controller
-public class LostArkAuctionController implements ChatBotController {
+@ChatBotController
+public class LostArkAuctionController implements Responsible {
     private final LostArkAuctionService service;
 
     @Override

@@ -1,6 +1,6 @@
 package chatbot.client.core.action;
 
-import chatbot.client.core.ChatBotController;
+import chatbot.client.core.Responsible;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
@@ -36,7 +36,7 @@ public class ActionBuilder {
             return new ActionBuilder(this);
         }
 
-        public Builder addCommand(String jsonFileName, ChatBotController controller) {
+        public Builder addCommand(String jsonFileName, Responsible controller) {
             String jsonString = readJsonFile(jsonFileName);
             ObjectMapper objectMapper = new ObjectMapper();
             try {
