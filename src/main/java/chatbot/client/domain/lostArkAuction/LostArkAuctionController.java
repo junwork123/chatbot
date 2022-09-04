@@ -14,7 +14,7 @@ import static chatbot.client.utils.ApiUtils.*;
 @RequiredArgsConstructor
 @ChatBotController
 public class LostArkAuctionController implements Answerable {
-    private final LostArkAuctionService service;
+    private final LostArkAuctionServiceImpl service;
 
     @Override
     public ApiResult<MessageDto> response(MessageTemplate template, String content) {

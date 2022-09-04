@@ -14,7 +14,7 @@ import static chatbot.client.utils.ApiUtils.success;
 @RequiredArgsConstructor
 @ChatBotController
 public class AudioController implements Answerable {
-    private final AudioService service;
+    private final AudioServiceImpl service;
     @Override
     public ApiUtils.ApiResult<MessageDto> response(@NonNull MessageTemplate template, @NonNull String content) {
         return success(

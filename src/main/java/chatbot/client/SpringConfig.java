@@ -8,9 +8,9 @@ import chatbot.client.core.event.EventQueue;
 import chatbot.client.core.event.EventSensor;
 import chatbot.client.core.event.TaskRunner;
 import chatbot.client.domain.lostArkAuction.LostArkAuctionController;
-import chatbot.client.domain.lostArkAuction.LostArkAuctionService;
+import chatbot.client.domain.lostArkAuction.LostArkAuctionServiceImpl;
 import chatbot.client.domain.pingpong.PingPongController;
-import chatbot.client.domain.pingpong.PingPongService;
+import chatbot.client.domain.pingpong.PingPongServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -33,8 +33,8 @@ public class SpringConfig {
     @Bean
     public ActionBuilder actionBuilder() {
         return new ActionBuilder.Builder()
-                .addCommand("ping", new PingPongController(new PingPongService()))
-                .addCommand("auction",new LostArkAuctionController(new LostArkAuctionService()))
+                .addCommand("ping", new PingPongController(new PingPongServiceImpl()))
+                .addCommand("auction",new LostArkAuctionController(new LostArkAuctionServiceImpl()))
 //                .addCommand("play",new AudioController(new AudioService()))
                 .build();
     }

@@ -15,7 +15,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 @RequiredArgsConstructor
 @ChatBotController
 public class PingPongController implements Answerable {
-    private final PingPongService service;
+    private final PingPongServiceImpl service;
 
     public ApiResult<MessageDto> response(MessageTemplate template, @NonNull String content) {
         return success(
