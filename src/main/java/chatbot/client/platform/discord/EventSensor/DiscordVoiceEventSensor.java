@@ -1,4 +1,4 @@
-package chatbot.client.platform.discord.actions;
+package chatbot.client.platform.discord.EventSensor;
 
 import discord4j.core.object.entity.Message;
 import discord4j.core.object.entity.channel.VoiceChannel;
@@ -8,9 +8,9 @@ import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Flux;
 
 @Slf4j
-public class DiscordVoiceAction {
+public class DiscordVoiceEventSensor {
+    private DiscordVoiceEventSensor(){}
 
-    private DiscordVoiceAction(){}
     public static class Builder{
         Flux<VoiceChannel> voiceChannelFlux;
         public Builder(){}
