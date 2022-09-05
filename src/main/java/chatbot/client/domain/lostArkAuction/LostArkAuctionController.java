@@ -1,27 +1,19 @@
 package chatbot.client.domain.lostArkAuction;
 
 import chatbot.client.core.ChatBotController;
-import chatbot.client.core.Answerable;
-import chatbot.client.core.message.MessageDto;
-import chatbot.client.core.message.MessageTemplate;
+import chatbot.client.core.command.CommandMapping;
+import chatbot.client.core.result.DefaultChatResult;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-
-import static com.google.common.base.Preconditions.checkNotNull;
-import static chatbot.client.utils.ApiUtils.*;
 
 @Slf4j
 @RequiredArgsConstructor
 @ChatBotController
-public class LostArkAuctionController implements Answerable {
-    private final LostArkAuctionServiceImpl service;
-
-    @Override
-    public ApiResult<MessageDto> response(MessageTemplate template, String content) {
-        return success(
-                service.makeResponse(template, content)
-                        .map(MessageDto::new)
-                        .orElseThrow(() -> new RuntimeException("Message Error"))
-        );
+public class LostArkAuctionController{
+    private final LostArkAuctionService service;
+    @CommandMapping(startCommand = "입찰")
+    public DefaultChatResult auction(String content){
+        log.info("로아 경매 컨트롤러");
+        return service.getAuctionPrices(content);
     }
 }

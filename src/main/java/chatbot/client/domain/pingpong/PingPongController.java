@@ -1,27 +1,20 @@
 package chatbot.client.domain.pingpong;
 
 import chatbot.client.core.ChatBotController;
-import chatbot.client.core.Answerable;
-import chatbot.client.core.message.MessageDto;
-import chatbot.client.core.message.MessageTemplate;
-import lombok.NonNull;
+import chatbot.client.core.command.CommandMapping;
+import chatbot.client.core.result.DefaultChatResult;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-
-import static chatbot.client.utils.ApiUtils.*;
-import static com.google.common.base.Preconditions.checkNotNull;
 
 @Slf4j
 @RequiredArgsConstructor
 @ChatBotController
-public class PingPongController implements Answerable {
-    private final PingPongServiceImpl service;
+public class PingPongController{
+    private final PingPongService service;
 
-    public ApiResult<MessageDto> response(MessageTemplate template, @NonNull String content) {
-        return success(
-                service.makeResponse(template, content)
-                        .map(MessageDto::new)
-                        .orElseThrow(() -> new RuntimeException("Message Error"))
-        );
+    @CommandMapping(startCommand = "ping")
+    public DefaultChatResult pingpong(String content){
+        log.info("핑퐁");
+        return service.getPingpong();
     }
 }
