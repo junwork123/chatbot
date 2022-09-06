@@ -1,14 +1,12 @@
 package chatbot.client.core;
 
-import chatbot.client.core.action.Action;
-import chatbot.client.core.message.MessageTemplate;
-
-import java.util.List;
+import chatbot.client.core.request.MessageDto;
+import chatbot.client.core.result.ChatResult;
+import static chatbot.client.utils.ApiUtils.*;
 
 public interface ChatBot {
     public void onCreated();
-    public void registerActions(List<Action> actions);
-    public void registerMessageTemplates(List<MessageTemplate> templates);
+    public ApiResult<MessageDto> execute(MessageDto messageDto);
     public void onDestroy();
 
 }
