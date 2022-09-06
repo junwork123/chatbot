@@ -2,9 +2,9 @@ package chatbot.client.platform.discord;
 
 import chatbot.client.core.ChatBot;
 import chatbot.client.core.command.Command;
-import chatbot.client.core.request.ChatRequest;
-import chatbot.client.core.request.MessageDto;
-import chatbot.client.core.result.ChatResult;
+import chatbot.client.core.chat.ChatRequest;
+import chatbot.client.core.chat.ChatDto;
+import chatbot.client.core.chat.ChatResult;
 import chatbot.client.platform.discord.EventSensor.DiscordMessageEventSensor;
 import chatbot.client.platform.discord.EventSensor.DiscordVoiceEventSensor;
 import chatbot.client.platform.discord.audio.LavaPlayerAudioProvider;
@@ -62,20 +62,23 @@ public class DiscordChatBot implements ChatBot {
     }
 
     @Override
-    public ApiResult<MessageDto> execute(MessageDto requestDto) {
+    public ApiResult<ChatDto> execute(ChatDto requestDto) {
+        log.info("dto 모델 : " + requestDto.getModel());
         ApiResult<ChatRequest> chatRequest = dispatcher.dispatch(requestDto);
         if(chatRequest.isSuccess()){
             Model model = chatRequest.getResponse().getModel();
+            log.info("dispatch 모델 : " + model);
             model.addAttribute("provider", provider);
             model.addAttribute("client", client);
             ApiResult<ChatResult> chatResult = dispatcher.onMessage(chatRequest.getResponse(), chatRequest.getControllerMap());
-            MessageDto resultDto = MessageDto.of(chatResult.getResponse());
+            log.info("dispatch 모델 : " + chatResult.getResponse());
+            ChatDto resultDto = ChatDto.of(chatResult.getResponse());
             return success(
                     resultDto
                     , null
             );
         }
-        return (ApiResult<MessageDto>) error(
+        return (ApiResult<ChatDto>) error(
                 new IllegalArgumentException()
                 , HttpStatus.NOT_FOUND
         );
