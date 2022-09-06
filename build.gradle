@@ -28,6 +28,7 @@ dependencies {
 	// API 확장을 위한 의존성 추가 시작
 	implementation 'org.apache.commons:commons-lang3'
 	implementation 'com.google.guava:guava:31.1-jre'
+	implementation 'org.modelmapper:modelmapper:3.1.0'
 	// API 확장을 위한 의존성 추가 끝
 
 	// 패키지 탐색을 위한 의존성 추가 시작
