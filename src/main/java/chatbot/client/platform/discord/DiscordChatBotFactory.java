@@ -31,6 +31,7 @@ public class DiscordChatBotFactory implements ChatBotFactory {
         LavaPlayerAudioProvider provider = new LavaPlayerAudioProvider();
         DiscordChatBot chatBot = new DiscordChatBot(client, provider, new DiscordDispatcher());
         chatBot.onCreated();
+        chatBot.registerSensor();
         chatBot.onDestroy();
         return chatBot;
     }

@@ -1,25 +1,27 @@
 package chatbot.client.platform.discord;
 
 import chatbot.client.core.ChatBot;
+import chatbot.client.core.command.Command;
 import chatbot.client.core.request.ChatRequest;
 import chatbot.client.core.request.MessageDto;
 import chatbot.client.core.result.ChatResult;
-import chatbot.client.core.result.DefaultChatResult;
+import chatbot.client.platform.discord.EventSensor.DiscordMessageEventSensor;
+import chatbot.client.platform.discord.EventSensor.DiscordVoiceEventSensor;
 import chatbot.client.platform.discord.audio.LavaPlayerAudioProvider;
-
 import discord4j.core.GatewayDiscordClient;
 import discord4j.core.event.domain.lifecycle.ReadyEvent;
+import discord4j.core.object.entity.Message;
 import discord4j.core.object.entity.User;
+import discord4j.core.object.entity.channel.VoiceChannel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.ui.Model;
+import reactor.core.publisher.Flux;
 
 import javax.annotation.PostConstruct;
-import java.util.concurrent.ConcurrentHashMap;
 
-import static chatbot.client.utils.ApiUtils.error;
 import static chatbot.client.utils.ApiUtils.*;
 @Slf4j
 @Getter
@@ -38,7 +40,27 @@ public class DiscordChatBot implements ChatBot {
                 });
         log.info("Ready 이벤트 수신자 설정됨");
     }
-    
+
+    @Override
+    public void registerSensor() {
+        for (Command command : Command.values()) {
+            Flux<Message> flux = DiscordMessageEventSensor.registerCommand(this, command);
+            flux.subscribe();
+        }
+
+        // 음성채팅 입장 이벤트 추가
+        Flux<Message> joinFlux = DiscordMessageEventSensor.registerCommand(this, Command.JOIN);
+        Flux<VoiceChannel> joinVoiceChannelFlux = new DiscordVoiceEventSensor.Builder()
+                .joinVoiceChannel(joinFlux, provider)
+                .Build();
+
+        // 음성채팅 퇴장 액션 추가
+        Flux<Message> outFlux = DiscordMessageEventSensor.registerCommand(this, Command.OUT);
+        Flux<VoiceChannel> leaveVoiceChannelFlux = new DiscordVoiceEventSensor.Builder()
+                .leaveVoiceChannel(outFlux)
+                .Build();
+    }
+
     @Override
     public ApiResult<MessageDto> execute(MessageDto requestDto) {
         ApiResult<ChatRequest> chatRequest = dispatcher.dispatch(requestDto);
