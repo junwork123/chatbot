@@ -1,36 +1,35 @@
 package chatbot.client.platform.discord;
 
-import chatbot.client.core.action.Action;
-import chatbot.client.core.action.PredefinedCommand;
 import chatbot.client.core.ChatBot;
-import chatbot.client.core.message.MessageTemplate;
-import chatbot.client.platform.discord.actions.DiscordMessageAction;
-import chatbot.client.platform.discord.actions.DiscordVoiceAction;
+import chatbot.client.core.request.ChatRequest;
+import chatbot.client.core.request.MessageDto;
+import chatbot.client.core.result.ChatResult;
+import chatbot.client.core.result.DefaultChatResult;
 import chatbot.client.platform.discord.audio.LavaPlayerAudioProvider;
+
 import discord4j.core.GatewayDiscordClient;
 import discord4j.core.event.domain.lifecycle.ReadyEvent;
-import discord4j.core.object.entity.Message;
 import discord4j.core.object.entity.User;
-import discord4j.core.object.entity.channel.VoiceChannel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import reactor.core.publisher.Flux;
+import org.springframework.http.HttpStatus;
+import org.springframework.ui.Model;
 
 import javax.annotation.PostConstruct;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 
+import static chatbot.client.utils.ApiUtils.error;
+import static chatbot.client.utils.ApiUtils.*;
 @Slf4j
 @Getter
 @RequiredArgsConstructor
 public class DiscordChatBot implements ChatBot {
-    public static final List<MessageTemplate> templates = new ArrayList<>();
     private final GatewayDiscordClient client;
     private final LavaPlayerAudioProvider provider;
+    private final DiscordDispatcher dispatcher;
 
     @Override
-    @PostConstruct
     public void onCreated() {
         client.getEventDispatcher().on(ReadyEvent.class)
                 .subscribe(event -> {
@@ -39,31 +38,26 @@ public class DiscordChatBot implements ChatBot {
                 });
         log.info("Ready 이벤트 수신자 설정됨");
     }
-
+    
     @Override
-    public void registerActions(List<Action> actions) {
-        // 음성채팅 입장 액션 추가
-        Flux<Message> joinFlux = DiscordMessageAction.registerCommand(client, PredefinedCommand.JOIN);
-        Flux<VoiceChannel> joinVoiceChannelFlux = new DiscordVoiceAction.Builder()
-                .joinVoiceChannel(joinFlux, provider)
-                .Build();
-
-        // 음성채팅 퇴장 액션 추가
-        Flux<Message> outFlux = DiscordMessageAction.registerCommand(client, PredefinedCommand.OUT);
-        Flux<VoiceChannel> leaveVoiceChannelFlux = new DiscordVoiceAction.Builder()
-                .leaveVoiceChannel(outFlux)
-                .Build();
-
-        // 사용자 정의 액션 추가
-        for (Action action : actions) {
-            Flux<Message> messageFlux = DiscordMessageAction.registerCommand(client, action);
-            messageFlux.subscribe();
+    public ApiResult<MessageDto> execute(MessageDto requestDto) {
+        ApiResult<ChatRequest> chatRequest = dispatcher.dispatch(requestDto);
+        if(chatRequest.isSuccess()){
+            Model model = chatRequest.getResponse().getModel();
+            model.addAttribute("provider", provider);
+            model.addAttribute("client", client);
+            ApiResult<ChatResult> chatResult = dispatcher.onMessage(chatRequest.getResponse(), chatRequest.getControllerMap());
+            MessageDto resultDto = MessageDto.of(chatResult.getResponse());
+            return success(
+                    resultDto
+                    , null
+            );
         }
-    }
+        return (ApiResult<MessageDto>) error(
+                new IllegalArgumentException()
+                , HttpStatus.NOT_FOUND
+        );
 
-    @Override
-    public void registerMessageTemplates(List<MessageTemplate> templates) {
-        DiscordChatBot.templates.addAll(templates);
     }
 
     @Override

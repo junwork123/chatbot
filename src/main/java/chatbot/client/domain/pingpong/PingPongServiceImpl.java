@@ -8,9 +8,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class PingPongServiceImpl implements PingPongService {
     public DefaultChatResult getPingpong(){
-        DefaultChatResult result = new DefaultChatResult.Builder()
+        return new DefaultChatResult.Builder()
                 .message("pong")
                 .build();
-        return result;
     }
 }
+

@@ -2,6 +2,7 @@ package chatbot.client.platform.discord.EventSensor;
 
 import chatbot.client.core.command.Command;
 import chatbot.client.core.request.ChatRequest;
+import chatbot.client.core.request.MessageDto;
 import chatbot.client.core.result.DefaultChatResult;
 import chatbot.client.platform.discord.DiscordChatBot;
 import chatbot.client.utils.ChatBotUtils;
@@ -12,22 +13,22 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Flux;
-
+import static chatbot.client.utils.ApiUtils.*;
 @Slf4j
 @Getter
 @RequiredArgsConstructor
 public class DiscordMessageEventSensor {
-    public static Flux<Message> registerCommand(GatewayDiscordClient client, Command command){
+    public static Flux<Message> registerCommand(DiscordChatBot chatBot, Command command){
         return new Builder()
-                .getMessageFromClient(client)
+                .getMessageFromClient(chatBot.getClient())
                 .filterCommand(command)
                 .createMessage(command.getDisplayMessage())
+                .executeCommand(chatBot, command)
                 .Build();
     }
 
     public static class Builder{
         Flux<Message> messageFlux;
-        String command;
         public Builder(){}
 
         public Flux<Message> Build(){
@@ -57,15 +58,15 @@ public class DiscordMessageEventSensor {
             return this;
         }
 
-        public Builder executeCommand(Command command, DiscordChatBot chatBot){
+        public Builder executeCommand(DiscordChatBot chatBot, Command command){
             messageFlux = messageFlux.map(message -> {
-                ChatRequest request = ChatRequest.builder()
-                                                .messenger("DISCORD")
-                                                .command(command)
-                                                .content(ChatBotUtils.parseCommand(message.getContent(), command))
-                                                .build();
-                DefaultChatResult chatResult = (DefaultChatResult) chatBot.execute(request);
-                message.getChannel().flatMap(channel -> channel.createMessage(chatResult.getMessage()))
+                MessageDto dto = MessageDto.builder()
+                                            .messenger("DISCORD")
+                                            .command(command)
+                                            .content(ChatBotUtils.parseCommand(message.getContent(), command))
+                                            .build();
+                ApiResult<MessageDto> result = chatBot.execute(dto);
+                message.getChannel().flatMap(channel -> channel.createMessage(result.getResponse().getContent()))
                         .subscribe();
                 return message;
             });
