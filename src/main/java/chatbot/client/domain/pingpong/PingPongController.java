@@ -14,7 +14,6 @@ public class PingPongController{
 
     @CommandMapping(startCommand = "ping")
     public DefaultChatResult pingpong(String content){
-        log.info("핑퐁");
         return service.getPingpong();
     }
 }

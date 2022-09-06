@@ -22,7 +22,7 @@ public class ChatBotUtils {
     public static final String scanPackages = "chatbot.client.domain";
     private static Reflections findPackage(String packageName) {
         Reflections reflections = new Reflections(packageName, Scanners.TypesAnnotated);
-        log.info("reflections : " + reflections.getTypesAnnotatedWith(ChatBotController.class).size());
+        log.info("발견한 ChatBotController : " + reflections.getTypesAnnotatedWith(ChatBotController.class).size());
         return reflections;
     }
     public static Map<Class<?>, Method> findController(Command command) {
@@ -41,11 +41,12 @@ public class ChatBotUtils {
     public static Method findMethod(Class<?> clazz, Command command){
         Method result = null;
         for (Method method : clazz.getDeclaredMethods()) {
-            log.info("메소드 검색 : " + method.getName());
+            log.info("찾은 메소드 : " + method.getName());
 
             if (method.isAnnotationPresent(CommandMapping.class)
                 && method.getAnnotation(CommandMapping.class).startCommand().equals(command.getStartCommand())) {
                     result = method;
+                    log.info("일치하는 메소드 명 : " + result.getName());
            }
         }
         return result;

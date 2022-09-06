@@ -1,9 +1,7 @@
 package chatbot.client.platform.discord.EventSensor;
 
 import chatbot.client.core.command.Command;
-import chatbot.client.core.request.ChatRequest;
 import chatbot.client.core.request.MessageDto;
-import chatbot.client.core.result.DefaultChatResult;
 import chatbot.client.platform.discord.DiscordChatBot;
 import chatbot.client.utils.ChatBotUtils;
 import discord4j.core.GatewayDiscordClient;
@@ -13,7 +11,8 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Flux;
-import static chatbot.client.utils.ApiUtils.*;
+
+import static chatbot.client.utils.ApiUtils.ApiResult;
 @Slf4j
 @Getter
 @RequiredArgsConstructor
@@ -66,6 +65,7 @@ public class DiscordMessageEventSensor {
                                             .content(ChatBotUtils.parseCommand(message.getContent(), command))
                                             .build();
                 ApiResult<MessageDto> result = chatBot.execute(dto);
+                log.info("Command 실행 결과 : " + result.getResponse().getCommand() + " -> " + result.getResponse().getContent());
                 message.getChannel().flatMap(channel -> channel.createMessage(result.getResponse().getContent()))
                         .subscribe();
                 return message;
