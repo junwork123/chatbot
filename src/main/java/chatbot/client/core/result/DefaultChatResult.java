@@ -1,11 +1,7 @@
 package chatbot.client.core.result;
 
-import chatbot.client.core.request.MessageDto;
 import lombok.Getter;
 
-/**
- * Created by YG on 2017-01-26.
- */
 @Getter
 public class DefaultChatResult extends SimpleMessageChatResult {
     public static DefaultChatResult NONE = builder().build();

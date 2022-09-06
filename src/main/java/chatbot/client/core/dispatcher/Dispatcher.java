@@ -1,6 +1,5 @@
 package chatbot.client.core.dispatcher;
 
-import chatbot.client.core.command.Command;
 import chatbot.client.core.request.ChatRequest;
 import chatbot.client.core.request.MessageDto;
 import chatbot.client.core.result.ChatResult;
