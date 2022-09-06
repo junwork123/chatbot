@@ -1,7 +1,8 @@
 package chatbot.client.platform.discord.EventSensor;
 
 import chatbot.client.core.command.Command;
-import chatbot.client.core.request.MessageDto;
+import chatbot.client.core.chat.Chat;
+import chatbot.client.core.chat.ChatDto;
 import chatbot.client.platform.discord.DiscordChatBot;
 import chatbot.client.utils.ChatBotUtils;
 import discord4j.core.GatewayDiscordClient;
@@ -10,6 +11,7 @@ import discord4j.core.object.entity.Message;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.ui.ConcurrentModel;
 import reactor.core.publisher.Flux;
 
 import static chatbot.client.utils.ApiUtils.ApiResult;
@@ -21,7 +23,6 @@ public class DiscordMessageEventSensor {
         return new Builder()
                 .getMessageFromClient(chatBot.getClient())
                 .filterCommand(command)
-                .createMessage(command.getDisplayMessage())
                 .executeCommand(chatBot, command)
                 .Build();
     }
@@ -59,14 +60,20 @@ public class DiscordMessageEventSensor {
 
         public Builder executeCommand(DiscordChatBot chatBot, Command command){
             messageFlux = messageFlux.map(message -> {
-                MessageDto dto = MessageDto.builder()
-                                            .messenger("DISCORD")
-                                            .command(command)
-                                            .content(ChatBotUtils.parseCommand(message.getContent(), command))
-                                            .build();
-                ApiResult<MessageDto> result = chatBot.execute(dto);
-                log.info("Command 실행 결과 : " + result.getResponse().getCommand() + " -> " + result.getResponse().getContent());
-                message.getChannel().flatMap(channel -> channel.createMessage(result.getResponse().getContent()))
+                Chat chat = Chat.builder()
+                        .messenger("DISCORD")
+                        .content(ChatBotUtils.parseCommand(message.getContent(), command))
+                        .build();
+
+                ChatDto dto = ChatDto.builder()
+                        .chat(chat)
+                        .model(new ConcurrentModel())
+                        .command(command)
+                        .build();
+
+                ApiResult<ChatDto> result = chatBot.execute(dto);
+                log.info("Command 실행 결과 : " + result.getResponse().getCommand() + " -> " + result.getResponse().getChat().getContent());
+                message.getChannel().flatMap(channel -> channel.createMessage(result.getResponse().getChat().getContent()))
                         .subscribe();
                 return message;
             });
