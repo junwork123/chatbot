@@ -1,7 +1,7 @@
 package chatbot.client.domain.lostArkAuction;
 
-import chatbot.client.core.result.DefaultChatResult;
+import chatbot.client.core.chat.ChatResult;
 
 public interface LostArkAuctionService {
-    public DefaultChatResult getAuctionPrices(String content);
+    public ChatResult getAuctionPrices(String content);
 }

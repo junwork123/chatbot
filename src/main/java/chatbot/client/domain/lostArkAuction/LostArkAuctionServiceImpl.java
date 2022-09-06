@@ -1,12 +1,13 @@
 package chatbot.client.domain.lostArkAuction;
 
-import chatbot.client.core.result.DefaultChatResult;
+import chatbot.client.core.chat.Chat;
+import chatbot.client.core.chat.ChatResult;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 @Slf4j
 @Service
 public class LostArkAuctionServiceImpl implements LostArkAuctionService {
-    public DefaultChatResult getAuctionPrices(String content){
+    public ChatResult getAuctionPrices(String content){
         int price = Integer.parseInt(content);
         String responseBody = new StringBuilder()
                 .append("4인 기준 : ")
@@ -17,9 +18,12 @@ public class LostArkAuctionServiceImpl implements LostArkAuctionService {
                 .append(Math.round(price * 0.89))
                 .toString();
 
-        DefaultChatResult result = new DefaultChatResult.Builder()
-                .message(responseBody)
+        Chat chat = Chat.builder()
+                .content(responseBody)
                 .build();
-        return result;
+
+        return ChatResult.builder()
+                .chat(chat)
+                .build();
     }
 }

@@ -1,7 +1,8 @@
 package chatbot.client.domain.audioPlayer;
 
 import chatbot.client.core.command.Command;
-import chatbot.client.core.result.DefaultChatResult;
+import chatbot.client.core.chat.Chat;
+import chatbot.client.core.chat.ChatResult;
 import discord4j.core.object.entity.Message;
 import discord4j.core.object.entity.channel.VoiceChannel;
 import discord4j.core.spec.VoiceChannelJoinSpec;
@@ -21,7 +22,7 @@ public class DiscordAudioServiceImpl implements AudioService {
                 .flatMap(voiceState -> voiceState.getChannel());
     }
     @Override
-    public DefaultChatResult joinVoiceChannel(Flux<Message> messageFlux, AudioProvider provider) {
+    public ChatResult joinVoiceChannel(Flux<Message> messageFlux, AudioProvider provider) {
         Flux<VoiceChannel> voiceChannelFlux = setVoiceState(messageFlux);
         voiceChannelFlux.map(channel -> {
             channel.join(VoiceChannelJoinSpec.builder()
@@ -30,8 +31,13 @@ public class DiscordAudioServiceImpl implements AudioService {
             return channel;
         }).subscribe();
 
-        return new DefaultChatResult.Builder()
-                .message(Command.JOIN.getDisplayMessage())
+        Chat chat = Chat.builder()
+                .content(Command.JOIN.getDisplayMessage())
                 .build();
+
+        return ChatResult.builder()
+                .chat(chat)
+                .build();
+
     }
 }

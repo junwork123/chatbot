@@ -1,7 +1,7 @@
 package chatbot.client.domain.pingpong;
 
-import chatbot.client.core.result.DefaultChatResult;
+import chatbot.client.core.chat.ChatResult;
 
 public interface PingPongService {
-    public DefaultChatResult getPingpong();
+    public ChatResult getPingpong();
 }
