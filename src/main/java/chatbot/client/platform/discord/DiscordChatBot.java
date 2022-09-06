@@ -1,40 +1,37 @@
 package chatbot.client.platform.discord;
 
-import chatbot.client.action.Action;
-import chatbot.client.action.PredefinedCommand;
 import chatbot.client.core.ChatBot;
-import chatbot.client.message.MessageTemplate;
-import chatbot.client.platform.discord.actions.DiscordMessageAction;
-import chatbot.client.platform.discord.actions.DiscordVoiceAction;
+import chatbot.client.core.command.Command;
+import chatbot.client.core.chat.ChatRequest;
+import chatbot.client.core.chat.ChatDto;
+import chatbot.client.core.chat.ChatResult;
+import chatbot.client.platform.discord.EventSensor.DiscordMessageEventSensor;
+import chatbot.client.platform.discord.EventSensor.DiscordVoiceEventSensor;
 import chatbot.client.platform.discord.audio.LavaPlayerAudioProvider;
 import discord4j.core.GatewayDiscordClient;
 import discord4j.core.event.domain.lifecycle.ReadyEvent;
 import discord4j.core.object.entity.Message;
 import discord4j.core.object.entity.User;
 import discord4j.core.object.entity.channel.VoiceChannel;
-import discord4j.voice.AudioProvider;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Controller;
+import org.springframework.http.HttpStatus;
+import org.springframework.ui.Model;
 import reactor.core.publisher.Flux;
 
 import javax.annotation.PostConstruct;
-import java.util.ArrayList;
-import java.util.List;
 
+import static chatbot.client.utils.ApiUtils.*;
 @Slf4j
 @Getter
 @RequiredArgsConstructor
 public class DiscordChatBot implements ChatBot {
-    public static final List<MessageTemplate> templates = new ArrayList<>();
     private final GatewayDiscordClient client;
     private final LavaPlayerAudioProvider provider;
+    private final DiscordDispatcher dispatcher;
 
     @Override
-    @PostConstruct
     public void onCreated() {
         client.getEventDispatcher().on(ReadyEvent.class)
                 .subscribe(event -> {
@@ -45,29 +42,47 @@ public class DiscordChatBot implements ChatBot {
     }
 
     @Override
-    public void registerActions(List<Action> actions) {
-        // 음성채팅 입장 액션 추가
-        Flux<Message> joinFlux = DiscordMessageAction.registerCommand(client, PredefinedCommand.JOIN);
-        Flux<VoiceChannel> joinVoiceChannelFlux = new DiscordVoiceAction.Builder()
+    public void registerSensor() {
+        for (Command command : Command.values()) {
+            Flux<Message> flux = DiscordMessageEventSensor.registerCommand(this, command);
+            flux.subscribe();
+        }
+
+        // 음성채팅 입장 이벤트 추가
+        Flux<Message> joinFlux = DiscordMessageEventSensor.registerCommand(this, Command.JOIN);
+        Flux<VoiceChannel> joinVoiceChannelFlux = new DiscordVoiceEventSensor.Builder()
                 .joinVoiceChannel(joinFlux, provider)
                 .Build();
 
         // 음성채팅 퇴장 액션 추가
-        Flux<Message> outFlux = DiscordMessageAction.registerCommand(client, PredefinedCommand.OUT);
-        Flux<VoiceChannel> leaveVoiceChannelFlux = new DiscordVoiceAction.Builder()
+        Flux<Message> outFlux = DiscordMessageEventSensor.registerCommand(this, Command.OUT);
+        Flux<VoiceChannel> leaveVoiceChannelFlux = new DiscordVoiceEventSensor.Builder()
                 .leaveVoiceChannel(outFlux)
                 .Build();
-
-        // 사용자 정의 액션 추가
-        for (Action action : actions) {
-            Flux<Message> messageFlux = DiscordMessageAction.registerCommand(client, action);
-            messageFlux.subscribe();
-        }
     }
 
     @Override
-    public void registerMessageTemplates(List<MessageTemplate> templates) {
-        DiscordChatBot.templates.addAll(templates);
+    public ApiResult<ChatDto> execute(ChatDto requestDto) {
+        log.info("dto 모델 : " + requestDto.getModel());
+        ApiResult<ChatRequest> chatRequest = dispatcher.dispatch(requestDto);
+        if(chatRequest.isSuccess()){
+            Model model = chatRequest.getResponse().getModel();
+            log.info("dispatch 모델 : " + model);
+            model.addAttribute("provider", provider);
+            model.addAttribute("client", client);
+            ApiResult<ChatResult> chatResult = dispatcher.onMessage(chatRequest.getResponse(), chatRequest.getControllerMap());
+            log.info("dispatch 모델 : " + chatResult.getResponse());
+            ChatDto resultDto = ChatDto.of(chatResult.getResponse());
+            return success(
+                    resultDto
+                    , null
+            );
+        }
+        return (ApiResult<ChatDto>) error(
+                new IllegalArgumentException()
+                , HttpStatus.NOT_FOUND
+        );
+
     }
 
     @Override

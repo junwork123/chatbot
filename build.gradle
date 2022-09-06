@@ -22,13 +22,18 @@ repositories {
 }
 
 dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+
 	// API 확장을 위한 의존성 추가 시작
 	implementation 'org.apache.commons:commons-lang3'
 	implementation 'com.google.guava:guava:31.1-jre'
+	implementation 'org.modelmapper:modelmapper:3.1.0'
 	// API 확장을 위한 의존성 추가 끝
 
-	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
-	implementation 'org.springframework.boot:spring-boot-starter-web'
+	// 패키지 탐색을 위한 의존성 추가 시작
+	implementation 'org.reflections:reflections:0.10.2'
+	// 패키지 탐색을 위한 의존성 추가 끝
 
 	//Discord4J 라이브러리 의존성 추가 시작
 	implementation 'com.discord4j:discord4j-core:3.2.3'

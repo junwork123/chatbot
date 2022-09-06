@@ -1,27 +1,26 @@
 package chatbot.client.domain.audioPlayer;
 
 import chatbot.client.core.ChatBotController;
-import chatbot.client.message.MessageDto;
-import chatbot.client.message.MessageTemplate;
-import chatbot.client.utils.ApiUtils;
-import lombok.NonNull;
+import chatbot.client.core.command.CommandMapping;
+import chatbot.client.core.chat.ChatRequest;
+import chatbot.client.core.chat.ChatResult;
+import discord4j.core.object.entity.Message;
+import discord4j.voice.AudioProvider;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-
-import static chatbot.client.utils.ApiUtils.success;
+import org.springframework.ui.Model;
+import reactor.core.publisher.Flux;
 
 
 @RequiredArgsConstructor
-@Controller
-public class AudioController implements ChatBotController {
+@ChatBotController
+public class AudioController{
     private final AudioService service;
-    @Override
-    public ApiUtils.ApiResult<MessageDto> response(@NonNull MessageTemplate template, @NonNull String content) {
-        return success(
-                service.makeResponse(template, content)
-                        .map(MessageDto::new)
-                        .orElseThrow(() -> new RuntimeException("Message Error"))
-        );
+
+    @CommandMapping(startCommand = "join")
+    public ChatResult joinVoiceChannel(ChatRequest request){
+        Model model = request.getModel();
+        Flux<Message> messageFlux = (Flux<Message>) model.getAttribute("messageFlux");
+        AudioProvider provider = (AudioProvider) model.getAttribute("provider");
+        return service.joinVoiceChannel(messageFlux, provider);
     }
 }

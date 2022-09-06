@@ -1,12 +1,15 @@
 package chatbot.client.core;
 
-import chatbot.client.message.MessageDto;
-import chatbot.client.message.MessageTemplate;
-import lombok.NonNull;
-import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Component;
 
-import static chatbot.client.utils.ApiUtils.ApiResult;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
-public interface ChatBotController {
-    public ApiResult<MessageDto> response(@NonNull MessageTemplate template, @NonNull String content);
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.TYPE)
+@Component
+public @interface ChatBotController {
+    String command() default "hello";
 }
