@@ -4,7 +4,7 @@ import chatbot.client.core.command.Command;
 import chatbot.client.core.chat.Chat;
 import chatbot.client.core.chat.ChatDto;
 import chatbot.client.platform.discord.DiscordChatBot;
-import chatbot.client.utils.ChatBotUtils;
+import chatbot.client.utils.ChatUtils;
 import discord4j.core.GatewayDiscordClient;
 import discord4j.core.event.domain.message.MessageCreateEvent;
 import discord4j.core.object.entity.Message;
@@ -62,7 +62,7 @@ public class DiscordMessageEventSensor {
             messageFlux = messageFlux.map(message -> {
                 Chat chat = Chat.builder()
                         .messenger("DISCORD")
-                        .content(ChatBotUtils.parseCommand(message.getContent(), command))
+                        .content(ChatUtils.parseCommand(message.getContent(), command))
                         .build();
 
                 ChatDto dto = ChatDto.builder()
@@ -73,8 +73,11 @@ public class DiscordMessageEventSensor {
 
                 ApiResult<ChatDto> result = chatBot.execute(dto);
                 log.info("Command 실행 결과 : " + result.getResponse().getCommand() + " -> " + result.getResponse().getChat().getContent());
-                message.getChannel().flatMap(channel -> channel.createMessage(result.getResponse().getChat().getContent()))
-                        .subscribe();
+                if(result.getResponse().getChat().getContent().isEmpty() || !result.getResponse().getChat().getContent().equals("")){
+                    message.getChannel().flatMap(channel -> channel.createMessage(result.getResponse().getChat().getContent()))
+                            .subscribe();
+                }
+
                 return message;
             });
             return this;

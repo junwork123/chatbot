@@ -6,5 +6,4 @@ import discord4j.voice.AudioProvider;
 import reactor.core.publisher.Flux;
 
 public interface AudioService {
-    public ChatResult joinVoiceChannel(Flux<Message> messageFlux, AudioProvider provider);
 }

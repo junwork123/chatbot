@@ -37,13 +37,11 @@ public class ChatDto {
 
     public static ChatDto of(ChatRequest chatRequest){
         ModelMapper mapper = MapperUtils.getMapper();
-        ChatDto dto = mapper.map(chatRequest, ChatDto.class);
-        return dto;
+        return mapper.map(chatRequest, ChatDto.class);
     }
 
     public static ChatDto of(ChatResult chatResult){
         ModelMapper mapper = MapperUtils.getMapper();
-        ChatDto dto = mapper.map(chatResult, ChatDto.class);
-        return dto;
+        return mapper.map(chatResult, ChatDto.class);
     }
 }
