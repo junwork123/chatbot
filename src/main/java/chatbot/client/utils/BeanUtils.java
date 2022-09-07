@@ -33,7 +33,6 @@ public class BeanUtils {
     public static Map<Class<?>, Method> findController(Command command) {
         Map<Class<?>, Method> resultMap = new HashMap<>();
         findPackage(scanPackages).getTypesAnnotatedWith(ChatBotController.class)
-                .stream()
                 .forEach(aClass -> {
                     Method method = findMethod(aClass, command);
                     if(method != null) {
