@@ -5,7 +5,6 @@ import chatbot.client.core.chat.ChatRequest;
 import chatbot.client.core.chat.ChatDto;
 import chatbot.client.core.chat.ChatResult;
 import chatbot.client.utils.BeanUtils;
-import chatbot.client.utils.ChatBotUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -25,7 +24,7 @@ public class DiscordDispatcher implements Dispatcher {
     public ApiResult<ChatRequest> dispatch(ChatDto dto) {
         return success(
                 dto.toRequestEntity()
-                , ChatBotUtils.findController(dto.getCommand())
+                , BeanUtils.findController(dto.getCommand())
         );
     }
 

@@ -4,7 +4,7 @@ import chatbot.client.core.command.Command;
 import chatbot.client.core.chat.Chat;
 import chatbot.client.core.chat.ChatDto;
 import chatbot.client.platform.discord.DiscordChatBot;
-import chatbot.client.utils.ChatBotUtils;
+import chatbot.client.utils.ChatUtils;
 import discord4j.core.GatewayDiscordClient;
 import discord4j.core.event.domain.message.MessageCreateEvent;
 import discord4j.core.object.entity.Message;
@@ -62,7 +62,7 @@ public class DiscordMessageEventSensor {
             messageFlux = messageFlux.map(message -> {
                 Chat chat = Chat.builder()
                         .messenger("DISCORD")
-                        .content(ChatBotUtils.parseCommand(message.getContent(), command))
+                        .content(ChatUtils.parseCommand(message.getContent(), command))
                         .build();
 
                 ChatDto dto = ChatDto.builder()
