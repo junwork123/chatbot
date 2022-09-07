@@ -8,14 +8,8 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @Service
 public class PingPongServiceImpl implements PingPongService {
-    public ChatResult getPingpong(){
-        Chat chat = Chat.builder()
-                .content("pong")
-                .build();
-
-        return ChatResult.builder()
-                .chat(chat)
-                .build();
+    public String getPingpong(){
+        return "pong";
     }
 }
 
