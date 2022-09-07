@@ -18,28 +18,4 @@ import reactor.core.publisher.Flux;
 @RequiredArgsConstructor
 @Service
 public class DiscordAudioServiceImpl implements AudioService {
-    public Flux<VoiceChannel> setVoiceState (Flux<Message> messageFlux){
-        return messageFlux.flatMap(Message::getAuthorAsMember)
-                .flatMap(PartialMember::getVoiceState)
-                .flatMap(VoiceState::getChannel);
-    }
-    @Override
-    public ChatResult joinVoiceChannel(Flux<Message> messageFlux, AudioProvider provider) {
-        Flux<VoiceChannel> voiceChannelFlux = setVoiceState(messageFlux);
-        voiceChannelFlux.map(channel -> {
-            channel.join(VoiceChannelJoinSpec.builder()
-                    .provider(provider)
-                    .build()).subscribe();
-            return channel;
-        }).subscribe();
-
-        Chat chat = Chat.builder()
-                .content(Command.JOIN.getDisplayMessage())
-                .build();
-
-        return ChatResult.builder()
-                .chat(chat)
-                .build();
-
-    }
 }
