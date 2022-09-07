@@ -44,8 +44,11 @@ public class DiscordChatBot implements ChatBot {
     @Override
     public void registerSensor() {
         for (Command command : Command.values()) {
-            Flux<Message> flux = DiscordMessageEventSensor.registerCommand(this, command);
-            flux.subscribe();
+            // 클라이언트 액션이 필요한 경우는 제외하고 등록
+            if(!command.isAction()) {
+                Flux<Message> flux = DiscordMessageEventSensor.registerCommand(this, command);
+                flux.subscribe();
+            }
         }
 
         // 음성채팅 입장 이벤트 추가

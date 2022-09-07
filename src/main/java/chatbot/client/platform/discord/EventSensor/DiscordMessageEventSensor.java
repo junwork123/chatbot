@@ -73,8 +73,11 @@ public class DiscordMessageEventSensor {
 
                 ApiResult<ChatDto> result = chatBot.execute(dto);
                 log.info("Command 실행 결과 : " + result.getResponse().getCommand() + " -> " + result.getResponse().getChat().getContent());
-                message.getChannel().flatMap(channel -> channel.createMessage(result.getResponse().getChat().getContent()))
-                        .subscribe();
+                if(result.getResponse().getChat().getContent().isEmpty() || !result.getResponse().getChat().getContent().equals("")){
+                    message.getChannel().flatMap(channel -> channel.createMessage(result.getResponse().getChat().getContent()))
+                            .subscribe();
+                }
+
                 return message;
             });
             return this;
