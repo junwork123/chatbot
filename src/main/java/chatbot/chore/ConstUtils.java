@@ -1,4 +1,4 @@
-package chatbot.client.utils;
+package chatbot.chore;
 
 public class ConstUtils {
     private ConstUtils() {}
