@@ -9,7 +9,7 @@ import java.util.Map;
 
 import static chatbot.client.utils.ApiUtils.ApiResult;
 
-public interface Dispatcher {
+public interface ChatBotDispatcher {
     ApiResult<ChatRequest> dispatch(ChatDto dto);
     ApiResult<ChatResult> onMessage(ChatRequest request, Map<Class<?>, Method> map);
 }

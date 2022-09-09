@@ -29,7 +29,7 @@ public class DiscordChatBotFactory implements ChatBotFactory {
         // Discord 챗봇 생성
         GatewayDiscordClient client = DiscordClientBuilder.create(DISCORD_TOKEN_ID).build().login().block();
         LavaPlayerAudioProvider provider = new LavaPlayerAudioProvider();
-        DiscordChatBot chatBot = new DiscordChatBot(client, provider, new DiscordDispatcher());
+        DiscordChatBot chatBot = new DiscordChatBot(client, provider, new DiscordChatBotDispatcher());
         chatBot.onCreated();
         chatBot.registerSensor();
         chatBot.onDestroy();
