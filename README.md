@@ -1,12 +1,34 @@
-# Spring Boot Chatbot
+# Spring Boot ChatBot
 
-스프링 부트 기반 챗봇 프레임워크입니다.
+Hi guys!
 
-# Feat
+This is a `project to build a ChatBot Framework` based on Spring Boot.
+
+# Feature
+
+- `Spring Framework Based` Environment
+- `Easy to Implement` each Platform(Discord, Line, Slack etc.)
+- `Easy to expand` Commands & Actions
 
 # Process
+![process](docs/process.png)
 
-# Core Package
+
+# Core Packages
+
+- `domain` : this package is `focusing on Subject` like playing a Music, telling a joke or notice on Something via `Controller & Service`.
+
+- `platform` : this package is implementation of ChatBot interfaces depend on specific platform such as Discord, Slack or Line.
+
+# Core Concept
+
+- `Command` : Command is Enum class for predefined Actions. it has a Meta-Info values for filtering or finding a controller.  
+
+- `@CommandMapping` : This annotation helps us find controller and method to be executed. it needs String Value named `startCommand` matching `Command`. 
+
+- `@ChatBotController` : Actually, This annotation is same as `@Controller`, But it could help `Dispatcher` and distinguish `@ChatBotController` from `@Controller` when Dispatcher finds a controller.     
+
+- `ChatBotDispather` : this interface has 2 methods. One is `dispatch` for finding controller and Method to be executed. Another is `onMessage` for invoke them.  
 
 # Release Notes
 
@@ -15,3 +37,9 @@
 # example
 
 # To-do
+
+- Batch Service
+- Auto Command Complete
+
+# Thanks to
+[kingbbode님](https://github.com/kingbbode/spring-boot-chatbot)
