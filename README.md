@@ -4,6 +4,9 @@ Hi guys!
 
 This is a `project to build a ChatBot Framework` based on Spring Boot.
 
+# Author
+- [junwork123](https://www.junwork.net/) (Project Owner)
+
 # Feature
 
 - `Spring Framework Based` Environment
