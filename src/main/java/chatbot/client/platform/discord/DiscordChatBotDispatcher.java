@@ -1,6 +1,6 @@
 package chatbot.client.platform.discord;
 
-import chatbot.client.core.dispatcher.Dispatcher;
+import chatbot.client.core.dispatcher.ChatBotDispatcher;
 import chatbot.client.core.chat.ChatRequest;
 import chatbot.client.core.chat.ChatDto;
 import chatbot.client.core.chat.ChatResult;
@@ -18,7 +18,7 @@ import static chatbot.client.utils.ApiUtils.success;
 @Slf4j
 @RequiredArgsConstructor
 @Component
-public class DiscordDispatcher implements Dispatcher {
+public class DiscordChatBotDispatcher implements ChatBotDispatcher {
     private static final String MESSENGER = "DISCORD";
     @Override
     public ApiResult<ChatRequest> dispatch(ChatDto dto) {

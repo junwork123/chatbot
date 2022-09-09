@@ -29,7 +29,7 @@ import static chatbot.client.utils.ApiUtils.*;
 public class DiscordChatBot implements ChatBot {
     private final GatewayDiscordClient client;
     private final LavaPlayerAudioProvider provider;
-    private final DiscordDispatcher dispatcher;
+    private final DiscordChatBotDispatcher dispatcher;
 
     @Override
     public void onCreated() {
@@ -67,13 +67,13 @@ public class DiscordChatBot implements ChatBot {
     @Override
     public ApiResult<ChatDto> execute(ChatDto requestDto) {
         log.info("dto 모델 : " + requestDto.getModel());
-        ApiResult<ChatRequest> chatRequest = dispatcher.dispatch(requestDto);
-        if(chatRequest.isSuccess()){
-            Model model = chatRequest.getResponse().getModel();
+        ApiResult<ChatRequest> request = dispatcher.dispatch(requestDto);
+        if(request.isSuccess()){
+            Model model = request.getResponse().getModel();
             log.info("dispatch 모델 : " + model);
             model.addAttribute("provider", provider);
             model.addAttribute("client", client);
-            ApiResult<ChatResult> chatResult = dispatcher.onMessage(chatRequest.getResponse(), chatRequest.getControllerMap());
+            ApiResult<ChatResult> chatResult = dispatcher.onMessage(request.getResponse(), request.getControllerMap());
             log.info("dispatch 모델 : " + chatResult.getResponse());
             ChatDto resultDto = ChatDto.of(chatResult.getResponse());
             return success(
