@@ -41,6 +41,7 @@ This is a `project to build a ChatBot Framework` based on Spring Boot.
 
 # To-do
 
+- Event Driven Architecture([ref](https://techblog.woowahan.com/7835/))
 - Batch Service
 - Auto Command Complete
 
