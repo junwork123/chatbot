@@ -31,7 +31,7 @@ This is a `project to build a ChatBot Framework` based on Spring Boot.
 
 - `@ChatBotController` : Actually, This annotation is same as `@Controller`, But it could help `Dispatcher` and distinguish `@ChatBotController` from `@Controller` when Dispatcher finds a controller.     
 
-- `ChatBotDispather` : this interface has 2 methods. One is `dispatch` for finding controller and Method to be executed. Another is `onMessage` for invoke them.  
+- `ChatBotDispather` : this interface has 2 methods. One is `dispatch` for finding controller and method to be executed. Another is `onMessage` to invoke them.  
 
 # Release Notes
 
