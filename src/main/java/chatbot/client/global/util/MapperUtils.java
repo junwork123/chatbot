@@ -1,8 +1,8 @@
-package chatbot.client.utils;
+package chatbot.client.global.util;
 
 import org.modelmapper.ModelMapper;
 public class MapperUtils {
-    private static ModelMapper mapper = new ModelMapper();
+    private static final ModelMapper mapper = new ModelMapper();
 
     public static ModelMapper getMapper(){
         return mapper;

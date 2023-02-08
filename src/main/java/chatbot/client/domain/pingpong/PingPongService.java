@@ -1,7 +1,13 @@
 package chatbot.client.domain.pingpong;
 
-import chatbot.client.core.chat.ChatResult;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
 
-public interface PingPongService {
-    public String getPingpong();
+@Slf4j
+@Service
+public class PingPongService{
+    public String getPingpong(){
+        return "pong";
+    }
 }
+

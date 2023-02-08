@@ -1,4 +1,4 @@
-package chatbot.client.core;
+package chatbot.client.global.core;
 
 import org.springframework.stereotype.Component;
 

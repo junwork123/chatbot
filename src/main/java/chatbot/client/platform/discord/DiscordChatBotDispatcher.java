@@ -1,48 +1,44 @@
 package chatbot.client.platform.discord;
 
-import chatbot.client.core.dispatcher.ChatBotDispatcher;
-import chatbot.client.core.chat.ChatRequest;
-import chatbot.client.core.chat.ChatDto;
-import chatbot.client.core.chat.ChatResult;
-import chatbot.client.utils.BeanUtils;
+import chatbot.client.global.core.DispatchEntity;
+import chatbot.client.global.core.dispatcher.ChatBotDispatcher;
+import chatbot.client.global.core.model.ChatDto;
+import chatbot.client.global.core.model.ChatRequest;
+import chatbot.client.global.core.model.ChatResult;
+import chatbot.client.global.util.BeanUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.Map;
 
-import static chatbot.client.utils.ApiUtils.ApiResult;
-import static chatbot.client.utils.ApiUtils.success;
+
 @Slf4j
 @RequiredArgsConstructor
 @Component
 public class DiscordChatBotDispatcher implements ChatBotDispatcher {
     private static final String MESSENGER = "DISCORD";
     @Override
-    public ApiResult<ChatRequest> dispatch(ChatDto dto) {
-        return success(
+    public DispatchEntity<ChatRequest> dispatch(ChatDto dto) {
+        return DispatchEntity.request(
                 dto.toRequestEntity()
-                , BeanUtils.findController(dto.getCommand())
+                , BeanUtils.findController(dto.command())
         );
     }
 
     @Override
-    public ApiResult<ChatResult> onMessage(ChatRequest request, Map<Class<?>, Method> controllerMap) {
-        Class<?> clazz = controllerMap.keySet().stream().findFirst().get();
-        Method method = controllerMap.get(clazz);
+    public DispatchEntity<ChatResult> onMessage(DispatchEntity<ChatRequest> request) {
+        Class<?> clazz = request.controllerMap().keySet().iterator().next();
+        Method method = request.controllerMap().get(clazz);
         Object beanInstance = BeanUtils.getBean(clazz);
-        ChatResult chatResult = null;
+        ChatResult chatResult;
         try {
-            chatResult = (ChatResult) method.invoke(beanInstance, request);
-            log.info("dispatcher 응답 : " + chatResult.getChat().getContent());
+            chatResult = (ChatResult) method.invoke(beanInstance, request.content());
+            log.info("dispatcher 응답 : " + chatResult.chat().getContent());
         } catch (IllegalAccessException | InvocationTargetException e) {
             throw new RuntimeException(e);
         }
-        return success(
-                chatResult
-                , null
-        );
+        return DispatchEntity.response(chatResult);
     }
 }

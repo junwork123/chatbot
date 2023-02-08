@@ -1,17 +1,16 @@
-package chatbot.client.utils;
+package chatbot.client.global.util;
 
-import chatbot.client.core.chat.Chat;
-import chatbot.client.core.chat.ChatResult;
-import chatbot.client.core.command.Command;
+import chatbot.client.global.core.model.Chat;
+import chatbot.client.global.core.model.ChatResult;
+import chatbot.client.global.core.command.Command;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class ChatUtils {
     public static final String prefix = "!";
     public static String parseCommand(String message, Command command){
-        String commandWithSpace = new StringBuilder(command.getStartCommand()).append(" ").toString();
-        String result = message.replaceFirst(commandWithSpace, "");
-        return result;
+        String commandWithSpace = command.getStartCommand() + " ";
+        return message.replaceFirst(commandWithSpace, "");
     }
     public static ChatResult createSimpleChatResult(String content) {
         Chat chat = Chat.builder()

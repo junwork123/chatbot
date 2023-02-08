@@ -1,34 +1,18 @@
-package chatbot.client.core.chat;
+package chatbot.client.global.core.model;
 
-import chatbot.client.core.command.Command;
-import chatbot.client.utils.MapperUtils;
+import chatbot.client.global.core.command.Command;
+import chatbot.client.global.util.MapperUtils;
 import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
 import org.modelmapper.ModelMapper;
 import org.springframework.ui.Model;
 
-@Getter
-@Setter
-public class ChatDto {
-    private Chat chat;
-    private Command command;
-    private Model model;
-
-    public ChatDto(){}
+public record ChatDto (Chat chat, Command command, Model model) {
 
     @Builder
-    public ChatDto(Chat chat, Command command, Model model) {
-        this.chat = chat;
-        this.command = command;
-        this.model = model;
+    public ChatDto {
     }
 
     public ChatRequest toRequestEntity(){
-//        ModelMapper modelMapper = MapperUtils.getMapper();
-//        modelMapper.typeMap(MessageDto.class, ChatRequest.class).addMappings(mapper -> {
-//           mapper.map(MessageDto::getModel, ChatRequest::setModel);
-//        });
         return MapperUtils.getMapper().map(this, ChatRequest.class);
     }
     public ChatResult toResultEntity(){

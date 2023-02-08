@@ -1,6 +1,6 @@
-package chatbot.client.core.command;
+package chatbot.client.global.core.command;
 
-import chatbot.client.utils.ChatUtils;
+import chatbot.client.global.util.ChatUtils;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 @Getter
@@ -14,12 +14,9 @@ public enum Command {
     private final String description;
     private final String displayMessage;
     private final boolean isAction;
-    private String prefix = ChatUtils.prefix;
+    private final String prefix = ChatUtils.prefix;
 
     public String getStartCommandWithPrefix() {
-        return new StringBuilder()
-                .append(prefix)
-                .append(startCommand)
-                .toString();
+        return prefix + startCommand;
     }
 }

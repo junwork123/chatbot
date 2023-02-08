@@ -1,7 +1,7 @@
 package chatbot.client.platform.discord;
 
-import chatbot.client.core.ChatBot;
-import chatbot.client.core.ChatBotFactory;
+import chatbot.client.global.core.ChatBot;
+import chatbot.client.global.core.ChatBotFactory;
 import chatbot.client.platform.discord.audio.LavaPlayerAudioProvider;
 import discord4j.core.DiscordClientBuilder;
 import discord4j.core.GatewayDiscordClient;

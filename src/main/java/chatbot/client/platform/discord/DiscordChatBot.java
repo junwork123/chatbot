@@ -1,10 +1,13 @@
 package chatbot.client.platform.discord;
 
-import chatbot.client.core.ChatBot;
-import chatbot.client.core.command.Command;
-import chatbot.client.core.chat.ChatRequest;
-import chatbot.client.core.chat.ChatDto;
-import chatbot.client.core.chat.ChatResult;
+import chatbot.client.global.common.ApiResult;
+import chatbot.client.global.common.ApiResult.ApiEntity;
+import chatbot.client.global.core.ChatBot;
+import chatbot.client.global.core.DispatchEntity;
+import chatbot.client.global.core.model.ChatDto;
+import chatbot.client.global.core.model.ChatRequest;
+import chatbot.client.global.core.model.ChatResult;
+import chatbot.client.global.core.command.Command;
 import chatbot.client.platform.discord.EventSensor.DiscordMessageEventSensor;
 import chatbot.client.platform.discord.EventSensor.DiscordVoiceEventSensor;
 import chatbot.client.platform.discord.audio.LavaPlayerAudioProvider;
@@ -16,13 +19,10 @@ import discord4j.core.object.entity.channel.VoiceChannel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.ui.Model;
 import reactor.core.publisher.Flux;
 
 import javax.annotation.PostConstruct;
-
-import static chatbot.client.utils.ApiUtils.*;
 @Slf4j
 @Getter
 @RequiredArgsConstructor
@@ -65,27 +65,20 @@ public class DiscordChatBot implements ChatBot {
     }
 
     @Override
-    public ApiResult<ChatDto> execute(ChatDto requestDto) {
-        log.info("dto 모델 : " + requestDto.getModel());
-        ApiResult<ChatRequest> request = dispatcher.dispatch(requestDto);
-        if(request.isSuccess()){
-            Model model = request.getResponse().getModel();
-            log.info("dispatch 모델 : " + model);
-            model.addAttribute("provider", provider);
-            model.addAttribute("client", client);
-            ApiResult<ChatResult> chatResult = dispatcher.onMessage(request.getResponse(), request.getControllerMap());
-            log.info("dispatch 모델 : " + chatResult.getResponse());
-            ChatDto resultDto = ChatDto.of(chatResult.getResponse());
-            return success(
-                    resultDto
-                    , null
-            );
-        }
-        return (ApiResult<ChatDto>) error(
-                new IllegalArgumentException()
-                , HttpStatus.NOT_FOUND
-        );
+    public ApiEntity<?> execute(ChatDto requestDto) {
+        log.info("dto 모델 : " + requestDto.model());
+        DispatchEntity<ChatRequest> request = dispatcher.dispatch(requestDto);
 
+        Model model = request.content().model();
+        log.info("dispatch 모델 : " + model);
+        model.addAttribute("provider", provider);
+        model.addAttribute("client", client);
+
+        DispatchEntity<ChatResult> chatResult = dispatcher.onMessage(request);
+        log.info("dispatch 결과 : " + chatResult.content());
+
+        ChatDto resultDto = ChatDto.of(chatResult.content());
+        return ApiResult.success(resultDto);
     }
 
     @Override

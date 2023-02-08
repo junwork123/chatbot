@@ -1,10 +1,11 @@
 package chatbot.client.platform.discord.EventSensor;
 
-import chatbot.client.core.command.Command;
-import chatbot.client.core.chat.Chat;
-import chatbot.client.core.chat.ChatDto;
+import chatbot.client.global.common.ApiResult.ApiEntity;
+import chatbot.client.global.core.model.Chat;
+import chatbot.client.global.core.model.ChatDto;
+import chatbot.client.global.core.command.Command;
+import chatbot.client.global.util.ChatUtils;
 import chatbot.client.platform.discord.DiscordChatBot;
-import chatbot.client.utils.ChatUtils;
 import discord4j.core.GatewayDiscordClient;
 import discord4j.core.event.domain.message.MessageCreateEvent;
 import discord4j.core.object.entity.Message;
@@ -14,7 +15,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.ui.ConcurrentModel;
 import reactor.core.publisher.Flux;
 
-import static chatbot.client.utils.ApiUtils.ApiResult;
 @Slf4j
 @Getter
 @RequiredArgsConstructor
@@ -71,12 +71,12 @@ public class DiscordMessageEventSensor {
                         .command(command)
                         .build();
 
-                ApiResult<ChatDto> result = chatBot.execute(dto);
-                log.info("Command 실행 결과 : " + result.getResponse().getCommand() + " -> " + result.getResponse().getChat().getContent());
-                if(result.getResponse().getChat().getContent().isEmpty() || !result.getResponse().getChat().getContent().equals("")){
-                    message.getChannel().flatMap(channel -> channel.createMessage(result.getResponse().getChat().getContent()))
-                            .subscribe();
+                ApiEntity<?> result = chatBot.execute(dto);
+                if (result.errorResponse() != null) {
+                    log.error("Command 실행 결과 : " + result.errorResponse().getMessage());
                 }
+                ChatDto response = (ChatDto) result.response();
+                log.info("Command 실행 결과 : " + command.getStartCommand() + " -> " + response.chat().getContent());
 
                 return message;
             });

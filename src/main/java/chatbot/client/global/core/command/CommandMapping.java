@@ -1,6 +1,6 @@
-package chatbot.client.core.command;
+package chatbot.client.global.core.command;
 
-import chatbot.client.utils.ChatUtils;
+import chatbot.client.global.util.ChatUtils;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

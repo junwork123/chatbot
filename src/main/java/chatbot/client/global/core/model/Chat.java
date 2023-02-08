@@ -1,4 +1,4 @@
-package chatbot.client.core.chat;
+package chatbot.client.global.core.model;
 
 import lombok.Builder;
 import lombok.Getter;

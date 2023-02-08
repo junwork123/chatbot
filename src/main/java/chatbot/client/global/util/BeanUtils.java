@@ -1,8 +1,8 @@
-package chatbot.client.utils;
+package chatbot.client.global.util;
 
-import chatbot.client.core.ChatBotController;
-import chatbot.client.core.command.Command;
-import chatbot.client.core.command.CommandMapping;
+import chatbot.client.global.core.ChatBotController;
+import chatbot.client.global.core.command.Command;
+import chatbot.client.global.core.command.CommandMapping;
 import lombok.extern.slf4j.Slf4j;
 import org.reflections.Reflections;
 import org.reflections.scanners.Scanners;
